@@ -1,0 +1,41 @@
+# Node.js Dependencies
+node_modules
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+
+# Dependency directories
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Optional - Express app specific
+.env
+
+# React build directories
+/build
+/.next
+/.nuxt
+/out
+/.cache
+/public
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+
+# IDE files (example: VSCode)
+/.vscode
+.idea
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
