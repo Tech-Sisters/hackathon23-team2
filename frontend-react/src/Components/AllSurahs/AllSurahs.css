@@ -1,0 +1,44 @@
+.weakStrengthCircle {
+    color: #D39898
+}
+.mediumStrengthCircle {
+    color: #D3C398
+}
+.strongStrengthCircle {
+    color: #A7C39F
+}
+.strengthIcon{
+    cursor: pointer;
+    transition: border 0.1s ease;
+}
+.strengthIcon.clicked {
+    border: 2px solid #5F5353;
+    border-radius: 50%;
+}
+.submitButton {
+    background-color: #3C2E4D;
+    color: #FFFFFF;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    width: 8rem;
+}
+.header{
+    background-color: #3C2E4C;
+    color: #FFFFFF;
+}
+
+.headerTitle{
+    font-weight: bold;
+}
+.headerText{
+    font-weight: normal;
+}
+.strengthHeaderText{
+    color: #EDEAEA;
+}
+.surahName{
+    color: #5F5353;
+    font-weight: bold;
+    font-size: 16px;
+}
