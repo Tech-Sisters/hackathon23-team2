@@ -1,38 +1,41 @@
-.App {
-  text-align: center;
+.submitButton {
+  background-color: #3C2E4D;
+  color: #FFFFFF;
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  width: 8rem;
 }
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.surahName{
+  color: #5F5353;
+  font-weight: bold;
+  font-size: 16px;
 }
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.text{
+  color: #5F5353;
 }
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.WeakColor{
+  background-color: #D39898;
 }
-
-.App-link {
-  color: #61dafb;
+.MediumColor{
+  background-color: #D3C398;
 }
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.StrongColor{
+  background-color: #A7C39F;
+}
+.hideButton{
+  background-color: #847EA7;
+  color: #FFFFFF;
+  font-size: 16px;
+  font-weight: normal;
+  border: none;
+  width: 8rem;
+}
+.completeButton{
+  background-color: #A7C39F;
+  color: #FFFFFF;
+  font-size: 16px;
+  font-weight: normal;
+  border: none;
+  width: 8rem;
 }

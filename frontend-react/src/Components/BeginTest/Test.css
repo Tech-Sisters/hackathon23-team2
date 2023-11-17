@@ -1,0 +1,14 @@
+.test-page{
+    background-color: #3C2E4C;
+    min-width: 100vw;
+    min-height: 100vh;
+}
+.test-container{
+    background-color: #FCFCFC;
+    border: 2px solid #5F5353;
+    width: 80%;
+    height: 60vh;
+    min-width: 80vw;
+    max-width: 20vw;
+    overflow: auto;
+}

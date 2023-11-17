@@ -1,0 +1,5 @@
+.blurred-rectangle {
+    position: relative;
+    width: fit-content;
+    filter: blur(3px);
+}
