@@ -7,6 +7,7 @@ Navigate to the frontend or backend directory.
 For example, if working on the frontend:
 
 ``cd frontend-react``
+``npm install``
 ``npm start``
 
 ## When running Git commands:
