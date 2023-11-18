@@ -1,29 +1,17 @@
-const express = require('express');
-const mongoose = require('mongoose');
-require('dotenv').config();
+import express from "express"
+import mongoose from "mongoose"
+import listEndpoints from "express-list-endpoints"
+import dotenv from "dotenv"
+dotenv.config()
 
-const app = express();
+const app = express()
+const port = process.env.PORT || 3004
 
 mongoose
-  .connect(
-    'mongodb://' +
-    process.env.DB_USER +
-    ':' +
-    process.env.DB_PASSWORD +
-    '@' +
-    process.env.DB_HOST +
-    ':' +
-    process.env.DB_PORT +
-    '/' +
-    process.env.DB_NAME,
-  )
-
+  .connect(process.env.MONGO_URL)
   .then(() => {
-    console.log('Database connection successful');
+    console.log("MongoDB Connected")
+    console.log("backend is running on port:", port)
+    console.table(listEndpoints(app))
   })
-  .catch((err) => {
-    console.error('Database connection error: ' + err);
-  });
-
-
-module.exports = app;
+  .catch((err) => console.error("Database connection error: " + err))
