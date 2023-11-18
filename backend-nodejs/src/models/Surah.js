@@ -15,7 +15,7 @@ const SurahSchema = new mongoose.Schema({
         type: String,
         enum: ['Strong', 'Medium', 'Weak']
       },
-      currentStrentgh: {
+      currentStrength: {
         type: String,
         enum: ['Strong', 'Medium', 'Weak']
       },
