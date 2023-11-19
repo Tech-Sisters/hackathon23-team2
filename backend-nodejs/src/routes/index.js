@@ -4,8 +4,7 @@ import UsersModel from "../models/User.js"
 
 const usersRouter = express.Router()
 
-// endpoint for signup
-
+//create a new user (after successful firebase auth)
 usersRouter.post("/signup", async (req, res, next) => {
   try {
     const { username, email, auth_id } = req.body
@@ -20,6 +19,27 @@ usersRouter.post("/signup", async (req, res, next) => {
     const savedUser = await newUser.save()
 
     res.status(201).send(savedUser)
+  } catch (error) {
+    next(error)
+  }
+})
+
+// get the user based on auth_id
+usersRouter.get("/", async (req, res, next) => {
+  try {
+    const { auth_id } = req.query // Get auth_id from query parameters
+    console.log("Query Parameters", req.query)
+
+    if (!auth_id) {
+      return res.status(400).send({ message: "auth_id is required" })
+    }
+
+    const user = await UsersModel.findOne({ auth_id })
+    if (!user) {
+      return res.status(404).send({ message: "User not found" })
+    }
+
+    res.status(200).send(user)
   } catch (error) {
     next(error)
   }
