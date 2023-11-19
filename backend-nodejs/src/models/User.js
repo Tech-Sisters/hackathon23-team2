@@ -22,12 +22,12 @@ const UserSchema = new mongoose.Schema({
   },
   currentRevision: {
     first_surah: {
-      type: Number,
-      required: true
+      type: Number
+      // required: true
     },
     second_surah: {
-      type: Number,
-      required: true
+      type: Number
+      // required: true
     }
     // required: false
     // commented out this line since fields are optional by default

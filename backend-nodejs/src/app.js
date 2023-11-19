@@ -21,9 +21,9 @@ const corsOptions = {
 app.use(express.json())
 app.use(cors(corsOptions))
 
-app.get("/test", (req, res) => {
-  res.send("Test route working")
-})
+// app.get("/test", (req, res) => {
+//   res.send("Test route working")
+// })
 app.use("/users", usersRouter)
 
 // ---------------- SERVER ------------------
