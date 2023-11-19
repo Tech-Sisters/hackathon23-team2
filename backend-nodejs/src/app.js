@@ -21,9 +21,6 @@ const corsOptions = {
 app.use(express.json())
 app.use(cors(corsOptions))
 
-// app.get("/test", (req, res) => {
-//   res.send("Test route working")
-// })
 app.use("/users", usersRouter)
 
 // ---------------- SERVER ------------------
@@ -38,12 +35,3 @@ mongoose.connection.on("connected", () => {
     console.log("server is running on port:", port)
   })
 })
-
-// mongoose
-//   .connect(process.env.MONGO_URL)
-//   .then(() => {
-//     console.log("MongoDB Connected")
-//     console.log("backend is running on port:", port)
-//     console.table(listEndpoints(app))
-//   })
-//   .catch((err) => console.error("Database connection error: " + err))
