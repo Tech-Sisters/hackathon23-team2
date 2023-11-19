@@ -21,7 +21,6 @@ const SurahSchema = new mongoose.Schema({
       },
       revisions: [
         {
-          id: String,
           date: Date,
           strength: {
             type: String,
