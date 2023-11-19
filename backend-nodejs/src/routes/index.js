@@ -28,7 +28,7 @@ usersRouter.post("/signup", async (req, res, next) => {
 usersRouter.get("/", async (req, res, next) => {
   try {
     const { auth_id } = req.query // Get auth_id from query parameters
-    console.log("Query Parameters", req.query)
+    console.log("Query Parameters For Getting User", req.query)
 
     if (!auth_id) {
       return res.status(400).send({ message: "auth_id is required" })
@@ -45,10 +45,18 @@ usersRouter.get("/", async (req, res, next) => {
   }
 })
 
+// initilise the surahs for the user
 usersRouter.post("/initialiseSurah", async (req, res, next) => {
   try {
-    const { auth_id, juzzAmma } = req.body
+    const { auth_id } = req.query // Get auth_id from query parameters
+
+    const { juzzAmma } = req.body
+    console.log("Query Parameters For Initialising Surahs", req.query)
     console.log("req.body", req.body)
+
+    if (!auth_id) {
+      return res.status(400).send({ message: "auth_id is required as a query parameter" })
+    }
 
     const user = await UsersModel.findOne({ auth_id })
     if (!user) {
@@ -58,7 +66,33 @@ usersRouter.post("/initialiseSurah", async (req, res, next) => {
     // Update juzzAmma for the found user
     user.juzzAmma = juzzAmma
     const updatedUser = await user.save()
+
     res.status(200).send(updatedUser)
+  } catch (error) {
+    next(error)
+  }
+})
+
+// get the surahTestHistory for a specific surah
+usersRouter.get("/surahHistory", async (req, res, next) => {
+  try {
+    const { auth_id, surahId } = req.query
+
+    if (!auth_id || !surahId) {
+      return res.status(400).send({ message: "auth_id and surahId are required" })
+    }
+
+    const user = await UsersModel.findOne({ auth_id })
+    if (!user) {
+      return res.status(404).send({ message: "User not found" })
+    }
+
+    const surah = user.juzzAmma.find((s) => s.surah.id === surahId)
+    if (!surah) {
+      return res.status(404).send({ message: "Surah not found" })
+    }
+
+    res.status(200).send(surah.surah.surahTestHistory)
   } catch (error) {
     next(error)
   }
