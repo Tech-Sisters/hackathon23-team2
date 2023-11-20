@@ -4,13 +4,11 @@ import listEndpoints from "express-list-endpoints"
 import cors from "cors"
 import usersRouter from "./routes/users.js"
 import surahController from "./controllers/surahController.js"
-import dotenv from 'dotenv'
 import surahRouter from "./routes/surahs.js"
 
 const app = express()
 const port = process.env.PORT || 3004
 
-dotenv.config()
 
 // ---------------- WHITELIST FOR CORS ------------------
 
