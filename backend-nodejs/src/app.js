@@ -3,7 +3,6 @@ import mongoose from "mongoose"
 import listEndpoints from "express-list-endpoints"
 import cors from "cors"
 import usersRouter from "./routes/users.js"
-import surahController from "./controllers/surahController.js"
 import surahRouter from "./routes/surahs.js"
 
 const app = express()
@@ -30,7 +29,23 @@ app.use("/surahs", surahRouter)
 // ---------------- SERVER ------------------
 
 mongoose.set("strictQuery", false)
-mongoose.connect(process.env.MONGO_URL)
+/*mongoose.connect(process.env.MONGO_URL)
+
+*/
+
+mongoose
+  .connect(
+    'mongodb://' +
+    process.env.DB_USER +
+    ':' +
+    process.env.DB_PASSWORD +
+    '@' +
+    process.env.DB_HOST +
+    ':' +
+    process.env.DB_PORT +
+    '/' +
+    process.env.DB_NAME,
+  )
 
 mongoose.connection.on("connected", () => {
   console.log("connected to mongo!")
@@ -39,3 +54,5 @@ mongoose.connection.on("connected", () => {
     console.log("server is running on port:", port)
   })
 })
+
+
