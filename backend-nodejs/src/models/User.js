@@ -1,42 +1,41 @@
-import mongoose from "mongoose";
-import Surah from './Surah';
+import mongoose from "mongoose"
+import { SurahSchema } from "./Surah.js"
 
 const UserSchema = new mongoose.Schema({
-  id: {
-    type: String,
-    required: true,
-  },
   username: {
     type: String,
     lowercase: true,
-    required: true,
+    required: true
   },
   email: {
     type: String,
     lowercase: true,
-    required: true,
+    required: true
   },
   auth_id: {
     type: String,
-    required: false,
+    required: true
   },
   juzzAmma: {
-    type: [Surah],
-    required: true,
+    type: [SurahSchema],
+    required: true
   },
   currentRevision: {
     first_surah: {
-      type: Number,
-      required: true
+      type: Number
+      // required: true
     },
     second_surah: {
-      type: Number,
-      required: true
-    },
-    required: false // currentRevision only exists if the user has selected strength for one or more surahs
+      type: Number
+      // required: true
+    }
+    // required: false
+    // commented out this line since fields are optional by default
+    // and this was throwing an error
+    // currentRevision only exists if the user has selected strength for one or more surahs
   }
-});
+})
 
-const User = mongoose.model('User', UserSchema);
+const User = mongoose.model("User", UserSchema)
 
-export default User;
+export default User

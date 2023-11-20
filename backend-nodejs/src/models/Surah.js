@@ -1,38 +1,38 @@
-import mongoose from "mongoose";
+import mongoose from "mongoose"
 
 const SurahSchema = new mongoose.Schema({
   surah: {
     id: {
       type: String,
-      required: true,
+      required: true
     },
     name: {
       type: String,
-      required: true,
+      required: true
     },
     surahTestHistory: {
       initialStrength: {
         type: String,
-        enum: ['Strong', 'Medium', 'Weak']
+        enum: ["Strong", "Medium", "Weak"]
       },
       currentStrength: {
         type: String,
-        enum: ['Strong', 'Medium', 'Weak']
+        enum: ["Strong", "Medium", "Weak"]
       },
       revisions: [
         {
-          id: String,
           date: Date,
           strength: {
             type: String,
-            enum: ['Strong', 'Medium', 'Weak']
-          },
+            enum: ["Strong", "Medium", "Weak"]
+          }
         }
       ]
-    },
+    }
   }
 })
+export { SurahSchema } // Export the schema
+export default mongoose.model("Surah", SurahSchema)
+// const Surah = mongoose.model("Surah", SurahSchema)
 
-const Surah = mongoose.model('Surah', SurahSchema);
-
-export default Surah;
+// export default Surah
