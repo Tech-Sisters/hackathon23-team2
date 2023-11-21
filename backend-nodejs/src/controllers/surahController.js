@@ -80,6 +80,7 @@ const SurahController = {
         strength: strengthCapitalised
       })
 
+
       const updatedUser = await user.save()
       res.status(200).send(updatedUser)
     } catch (error) {
