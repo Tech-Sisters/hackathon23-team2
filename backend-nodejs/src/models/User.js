@@ -36,10 +36,20 @@ const UserSchema = new mongoose.Schema({
   },
   revisionSurahs: {
     first_surah: {
-      type: String
+      name: {
+        type: String,
+      },
+      id: {
+        type: String,
+      }
     },
     second_surah: {
-      type: String
+      name: {
+        type: String,
+      },
+      id: {
+        type: String,
+      }
     }
   }
 })

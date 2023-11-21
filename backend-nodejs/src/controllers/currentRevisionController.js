@@ -1,4 +1,3 @@
-import { SurahSchema } from "../models/Surah.js"
 import UsersModel from "../models/User.js"
 
 const CurrentRevisionController = {
@@ -33,7 +32,6 @@ const CurrentRevisionController = {
     }
   },
   // update happens every time after the user has completed a test
-  // neeed to have if loop to compare which has the bigger number, first_surah or second_surah
   updateCurrentRevision: async (req, res) => {
     try {
       const { auth_id, revisedSurah } = req.query
@@ -59,13 +57,11 @@ const CurrentRevisionController = {
           newNumber = 1;
         }
 
-        // Update the 'currentRevision' object with the new value
         user.currentRevision[revisedSurah] = newNumber;
 
         // update currentRevision in the database
         try {
           await user.save();
-          //console.log("Updated user:", user);
           return newNumber;
         } catch (error) {
           console.error(error);
@@ -84,53 +80,80 @@ const CurrentRevisionController = {
         } else if (newNumber === 2 || 4 || 5 || 7) {
           strength = 'weak'
         }
-        //console.log(strength);
         return strength;
       }
 
-      // the strength doesn't need to be saved in DB, it is only used to used in the below function
-
-      //! works until here
-
-
-      const findOldestRevisionWithStrength = (user, strength) => {
-        const surahTestHistories = user.juzzAmma.map(item => item.surah.surahTestHistory); //! check if this is correct!
-        //console.log(surahTestHistories);
+      // find oldest revision based on strength
+      const findOldestRevisionWithStrength = async (user, strength) => {
+        const surahTestHistories = user.juzzAmma.map(item => item.surah);
 
         // Flatten the array of surahTestHistory arrays into a single array
         const flattenedSurahTestHistories = [].concat(...surahTestHistories);
-        console.log(flattenedSurahTestHistories)
 
-        // Perform aggregations on the flattenedSurahTestHistories array as needed
-        // For instance, finding the oldest revision with a specific strength
-        const oldestRevision = flattenedSurahTestHistories
-          .filter(items => items.currentStrength === strength) // Filter by specific strength if needed //! filter doesn't find the strength
-        //.reduce((oldest, current) => {
-        //  if (!oldest || current.date < oldest.date) {
-        //    return current;
-        //  }
-        //  return oldest;
-        //}, null);
+        // Filter the array based on the 'currentStrength' property
+        const filteredSurahs = flattenedSurahTestHistories.filter((surah) => surah.surahTestHistory.currentStrength === 'Weak');
+        //! what about scenarios where nothing with the strength exists! 
 
-        console.log(oldestRevision);
+        // Look for items with an empty revisions array as these need to be revised first
+        const surahsWithEmptyRevisions = filteredSurahs.filter((surah) => surah.surahTestHistory.revisions.length === 0);
+        if (surahsWithEmptyRevisions.length > 0) {
+          // Found surahs with empty revisions
+          console.log('Surahs with empty revisions:', surahsWithEmptyRevisions); // works, returns all surahs with empty revisions
+          // Return the first surah with empty revisions
+          //TODO this surah needs to be saved to revisionSurahs
+          //return surahsWithEmptyRevisions[0];
+
+          // testing
+
+          user.revisionSurahs[revisedSurah].id = surahsWithEmptyRevisions[0].id;
+          user.revisionSurahs[revisedSurah].name = surahsWithEmptyRevisions[0].name;
+
+          try {
+            await user.save();
+          } catch (error) {
+            console.error(error);
+            return null;
+          }
+
+        } else { // if there are no surahs without revisions, we start comparing which revision is oldest
+          const surahsWithPopulatedRevisions = filteredSurahs.filter((surah) => surah.surahTestHistory.revisions.length > 0);
+
+          if (surahsWithPopulatedRevisions.length > 0) {
+            // Flatten the revisions arrays and get the oldest date
+            const oldestSurah = surahsWithPopulatedRevisions.reduce((oldest, current) => {
+              const oldestDate = oldest.surahTestHistory.revisions.slice(-1)[0]?.date || new Date(0);
+              const currentDate = current.surahTestHistory.revisions.slice(-1)[0]?.date || new Date(0);
+
+              return oldestDate < currentDate ? oldest : current;
+            });
+
+            console.log('Oldest Surah:', oldestSurah);
+            user.revisionSurahs[revisedSurah].id = oldestSurah.id;
+            user.revisionSurahs[revisedSurah].name = oldestSurah.name;
+
+            try {
+              await user.save();
+            } catch (error) {
+              console.error(error);
+              return null;
+            }
+
+
+            return oldestSurah;
+          }
+        }
       }
 
       //const currentNumber = findCurrentNumber(user);
       const newNumber = findNewNumber();
       const strength = determineStrength(newNumber);
       const oldestRevision = findOldestRevisionWithStrength(user, strength);
-      // Log or send oldestRevision as needed
-      console.log("Oldest Revision:", oldestRevision);
-      //const revisionSurahs = await user.revisionSurahs.save()
       res.status(200).send(oldestRevision);
 
     } catch (error) {
       console.error(error);
       res.status(500).send({ message: "Internal server error" });
     }
-
-
-    // TODO save surah ID and name to DB
 
   }
 }
