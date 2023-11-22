@@ -8,7 +8,6 @@ const BeginTest = () => {
   const location = useLocation();
   useEffect(() => {
     setSurah(location.state[0]);
-    console.log(location.state[0]);
   }, [surah]);
 
   const onBeginTestHandle = () => {

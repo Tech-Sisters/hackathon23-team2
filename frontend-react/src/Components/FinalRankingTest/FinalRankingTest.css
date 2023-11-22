@@ -5,9 +5,6 @@
     border: none;
     width: 8rem;
 }
-.isClicked{
-    box-shadow: inset 0px 0px 5px rgba(0, 0, 0, 0.5);
-}
 .nextIcon{
     cursor: pointer;
     font-size: 2rem;
