@@ -29,23 +29,7 @@ app.use("/surahs", surahRouter)
 // ---------------- SERVER ------------------
 
 mongoose.set("strictQuery", false)
-/*mongoose.connect(process.env.MONGO_URL)
-
-*/
-
-mongoose
-  .connect(
-    'mongodb://' +
-    process.env.DB_USER +
-    ':' +
-    process.env.DB_PASSWORD +
-    '@' +
-    process.env.DB_HOST +
-    ':' +
-    process.env.DB_PORT +
-    '/' +
-    process.env.DB_NAME,
-  )
+mongoose.connect(process.env.MONGO_URL)
 
 mongoose.connection.on("connected", () => {
   console.log("connected to mongo!")

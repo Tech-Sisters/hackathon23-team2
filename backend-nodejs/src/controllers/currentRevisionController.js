@@ -1,7 +1,7 @@
 import UsersModel from "../models/User.js"
 
 const CurrentRevisionController = {
-  initialiseCurrentRevision: async (req, res) => {
+  initialiseCurrentRevision: async (req, res, next) => {
     try {
       const { auth_id } = req.query
 
@@ -14,6 +14,7 @@ const CurrentRevisionController = {
         return res.status(404).send({ message: "User not found" })
       }
 
+      // *** Initial values for currentRevision ***
       // add initial values to currentRevision array that will be updated once the user starts completing tests
       const initialCurrentRevision = {
         first_surah: 1,
@@ -22,17 +23,42 @@ const CurrentRevisionController = {
 
       user.currentRevision = initialCurrentRevision;
 
-      const updatedUser = await user.save()
+      // *** Initial values for revisionSurahs ***
+      // find initial values for revisionSurahs (two random surahs that have initialStrength)
+      const surahsWithInitialStrength = user.juzzAmma.filter(item =>
+        item.surah && item.surah.surahTestHistory && item.surah.surahTestHistory.initialStrength !== undefined
+      );
 
-      res.status(200).send(updatedUser)
+      const firstTwoSurahsWithInitialStrength = surahsWithInitialStrength.slice(0, 2);
+
+      // extracting id and name
+      const idsAndNamesOfFirstTwoSurahs = firstTwoSurahsWithInitialStrength.map(item => ({
+        id: item.surah.id,
+        name: item.surah.name
+      }));
+
+      // Inserting the IDs and names into the user.revisionSurahs object
+      if (idsAndNamesOfFirstTwoSurahs.length > 0) {
+        user.revisionSurahs.first_surah.id = idsAndNamesOfFirstTwoSurahs[0].id;
+        user.revisionSurahs.first_surah.name = idsAndNamesOfFirstTwoSurahs[0].name;
+      }
+
+      if (idsAndNamesOfFirstTwoSurahs.length > 1) {
+        user.revisionSurahs.second_surah.id = idsAndNamesOfFirstTwoSurahs[1].id;
+        user.revisionSurahs.second_surah.name = idsAndNamesOfFirstTwoSurahs[1].name;
+      }
+
+
+      await user.save()
 
     } catch (error) {
-      console.error("Error initializing current revision:", error);
-      res.status(500).json({ message: "Internal server error" });
+      next(error)
     }
+
   },
+
   // update happens every time after the user has completed a test
-  updateCurrentRevision: async (req, res) => {
+  updateCurrentRevision: async (req, res, next) => {
     try {
       const { auth_id, revisedSurah } = req.query
 
@@ -45,117 +71,119 @@ const CurrentRevisionController = {
         return res.status(404).send({ message: "User not found" })
       }
 
-      const current = user.currentRevision[revisedSurah];
+      // the current 'color code number' of either first_surah or second_surah
+      const currentStrengthRating = user.currentRevision[revisedSurah];
 
-
-      // adding 1 to the current number to increment our value
-      const findNewNumber = async () => {
-        let newNumber;
-        if (current >= 1 && current < 7) { //we only increment until 7 as per our 'color code', after that we start from the beginning
-          newNumber = current + 1
+      // incrementing strength rating
+      const findNewStrengthRating = () => {
+        let newStrengthRating;
+        if (currentStrengthRating >= 1 && currentStrengthRating < 7) { //we only increment until 7 as per our 'color code', after that we start from the beginning
+          newStrengthRating = currentStrengthRating + 1
         } else {
-          newNumber = 1;
+          newStrengthRating = 1;
         }
 
-        user.currentRevision[revisedSurah] = newNumber;
-
-        // update currentRevision in the database
-        try {
-          await user.save();
-          return newNumber;
-        } catch (error) {
-          console.error(error);
-          return null;
-        }
+        return newStrengthRating
       };
 
 
-      // determining strength based on our 'colour code model'
-      const determineStrength = (newNumber) => {
+      // determining strength based on the strengthRating color code model
+      const determineStrength = (newStrengthRating) => {
         let strength;
-        if (newNumber === 1) {
-          strength = 'strong'
-        } else if (newNumber === 3 || 6) {
-          strength = 'medium'
-        } else if (newNumber === 2 || 4 || 5 || 7) {
-          strength = 'weak'
+        if (newStrengthRating === 1) {
+          strength = 'Strong'
+        } else if (newStrengthRating === 3 || newStrengthRating === 6) {
+          strength = 'Medium'
+        } else if (newStrengthRating === 2 || newStrengthRating === 4 || newStrengthRating === 5 || newStrengthRating === 7) {
+          strength = 'Weak'
         }
         return strength;
       }
 
-      // find oldest revision based on strength
+
       const findOldestRevisionWithStrength = async (user, strength) => {
-        const surahTestHistories = user.juzzAmma.map(item => item.surah);
+        const flattenedSurahTestHistories = [].concat(...user.juzzAmma.map(item => item.surah));
 
-        // Flatten the array of surahTestHistory arrays into a single array
-        const flattenedSurahTestHistories = [].concat(...surahTestHistories);
-
+        // these are used as back-up in case no surahs with current strenght
+        const strengthsOrder = ['Weak', 'Medium', 'Strong'];
         // Filter the array based on the 'currentStrength' property
-        const filteredSurahs = flattenedSurahTestHistories.filter((surah) => surah.surahTestHistory.currentStrength === 'Weak');
-        //! what about scenarios where nothing with the strength exists! 
+        let filteredSurahs = []; //?
+        filteredSurahs = flattenedSurahTestHistories.filter((surah) =>
+          surah.surahTestHistory.currentStrength === strength);
+
+        // If no surahs are found for the currentStrength, search with other strengths
+        if (filteredSurahs.length === 0) {
+          for (const strength of strengthsOrder.slice(1)) {
+            filteredSurahs = flattenedSurahTestHistories.filter((surah) =>
+              surah.surahTestHistory.currentStrength === strength);
+            if (filteredSurahs.length > 0) {
+              break;
+            }
+          }
+        }
 
         // Look for items with an empty revisions array as these need to be revised first
-        const surahsWithEmptyRevisions = filteredSurahs.filter((surah) => surah.surahTestHistory.revisions.length === 0);
-        if (surahsWithEmptyRevisions.length > 0) {
-          // Found surahs with empty revisions
-          console.log('Surahs with empty revisions:', surahsWithEmptyRevisions); // works, returns all surahs with empty revisions
-          // Return the first surah with empty revisions
-          //TODO this surah needs to be saved to revisionSurahs
-          //return surahsWithEmptyRevisions[0];
+        if (filteredSurahs.length > 0) {
+          const surahsWithEmptyRevisions = filteredSurahs.filter((surah) =>
+            surah.surahTestHistory.revisions.length === 0);
 
-          // testing
+          if (surahsWithEmptyRevisions.length > 0) {
+            // Found surahs with empty revisions
+            const oldestSurah = surahsWithEmptyRevisions[0];
+            return oldestSurah;
+            // Return the first surah with empty revisions
+            // if there are no surahs without revisions, we start comparing which revision is oldest  
+          } else {
+            const surahsWithPopulatedRevisions = filteredSurahs.filter((surah) =>
+              surah.surahTestHistory.revisions.length > 0);
 
-          user.revisionSurahs[revisedSurah].id = surahsWithEmptyRevisions[0].id;
-          user.revisionSurahs[revisedSurah].name = surahsWithEmptyRevisions[0].name;
-
-          try {
-            await user.save();
-          } catch (error) {
-            console.error(error);
-            return null;
-          }
-
-        } else { // if there are no surahs without revisions, we start comparing which revision is oldest
-          const surahsWithPopulatedRevisions = filteredSurahs.filter((surah) => surah.surahTestHistory.revisions.length > 0);
-
-          if (surahsWithPopulatedRevisions.length > 0) {
             // Flatten the revisions arrays and get the oldest date
-            const oldestSurah = surahsWithPopulatedRevisions.reduce((oldest, current) => {
-              const oldestDate = oldest.surahTestHistory.revisions.slice(-1)[0]?.date || new Date(0);
-              const currentDate = current.surahTestHistory.revisions.slice(-1)[0]?.date || new Date(0);
-
-              return oldestDate < currentDate ? oldest : current;
-            });
-
-            console.log('Oldest Surah:', oldestSurah);
-            user.revisionSurahs[revisedSurah].id = oldestSurah.id;
-            user.revisionSurahs[revisedSurah].name = oldestSurah.name;
-
-            try {
-              await user.save();
-            } catch (error) {
-              console.error(error);
-              return null;
-            }
-
+            const oldestSurah = surahsWithPopulatedRevisions
+              .sort((a, b) => {
+                const oldestDateA = a.surahTestHistory.revisions[0]?.date || new Date(0);
+                const oldestDateB = b.surahTestHistory.revisions[0]?.date || new Date(0);
+                if (oldestDateA === oldestDateB) {
+                  return 0; // Dates are equal; no change in order needed
+                }
+                return oldestDateA - oldestDateB;
+              })
+              .reduce((oldest, current) => {
+                const oldestDate = oldest.surahTestHistory.revisions[0]?.date || new Date(0);
+                const currentDate = current.surahTestHistory.revisions[0]?.date || new Date(0);
+                if (oldestDate === currentDate) {
+                  return oldest; // Dates are equal; retain the oldest found so far
+                }
+                return oldestDate < currentDate ? oldest : current;
+              });
 
             return oldestSurah;
           }
         }
       }
 
-      //const currentNumber = findCurrentNumber(user);
-      const newNumber = findNewNumber();
-      const strength = determineStrength(newNumber);
-      const oldestRevision = findOldestRevisionWithStrength(user, strength);
-      res.status(200).send(oldestRevision);
+
+      try {
+        const newStrengthRating = await findNewStrengthRating();
+        const strength = determineStrength(newStrengthRating);
+        const oldestRevision = await findOldestRevisionWithStrength(user, strength);
+
+        user.currentRevision[revisedSurah] = newStrengthRating;
+
+        user.revisionSurahs[revisedSurah].id = oldestRevision.id;
+        user.revisionSurahs[revisedSurah].name = oldestRevision.name;
+
+        await user.save();
+
+      } catch (error) {
+        next(error)
+      }
 
     } catch (error) {
-      console.error(error);
-      res.status(500).send({ message: "Internal server error" });
+      next(error)
     }
 
   }
 }
+
 
 export default CurrentRevisionController;

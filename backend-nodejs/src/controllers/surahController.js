@@ -23,7 +23,7 @@ const SurahController = {
       user.juzzAmma = juzzAmma
       const updatedUser = await user.save()
 
-      res.status(200).send(updatedUser)
+      //res.status(200).send(updatedUser) //!check what to do this with --move to routes?
     } catch (error) {
       next(error)
     }
@@ -80,9 +80,10 @@ const SurahController = {
         strength: strengthCapitalised
       })
 
+      await user.save()
 
-      const updatedUser = await user.save()
-      res.status(200).send(updatedUser)
+      //const updatedUser = await user.save()
+      //res.status(200).send(updatedUser) //this has been moved to routes surah.js
     } catch (error) {
       next(error)
     }
