@@ -1,5 +1,11 @@
-.blurred-rectangle {
+.hidden {
     position: relative;
     width: fit-content;
-    filter: blur(3px);
+    visibility: hidden;
 }
+.visible {
+    position: relative;
+    width: fit-content;
+    visibility: visible;
+}
+
