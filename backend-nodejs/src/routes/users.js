@@ -7,6 +7,5 @@ usersRouter.post("/signup", UserController.createUser);
 
 // get the user based on auth_id
 usersRouter.get("/", UserController.getUser);
-//TODO add here also getCurrentRevision
 
 export default usersRouter
