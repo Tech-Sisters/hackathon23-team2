@@ -1,13 +1,16 @@
 import { useState } from "react";
 import "../BeginTest/Test.css";
 import "./Test.css";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 const Test = () => {
+  let navigate = useNavigate();
   const location = useLocation();
   const testObj = location.state;
   const [ayahIndex, setAyaIndex] = useState(0);
   const [hideAyah, setHideAyah] = useState(true);
   const [completeAyah, setCompleteAyah] = useState(false);
+  const [ayahHelpCounter, setAyahHelpCounter] = useState(0);
+  const [ayahCounterFlag, setAyahCounterFlag] = useState(true);
   const handleClickComplete = () => {
     setHideAyah(false);
     setCompleteAyah(true);
@@ -17,10 +20,22 @@ const Test = () => {
     if (ayahIndex + 1 < testObj.ayahs.length) {
       setAyaIndex(ayahIndex + 1);
       setHideAyah(true);
-    } else alert("test finished");
+      setAyahCounterFlag(true);
+    } else {
+      navigate("/end-test", {
+        state: {
+          testObj,
+          ayahHelpCounter,
+        },
+      });
+    }
   };
   const handleClickUnhide = () => {
     setHideAyah(!hideAyah);
+    if (ayahCounterFlag && hideAyah) {
+      setAyahHelpCounter(ayahHelpCounter + 1);
+      setAyahCounterFlag(false);
+    }
   };
   return (
     <>
@@ -35,15 +50,13 @@ const Test = () => {
             </div>
             <div className="row my-3 justify-content-center">
               <div className="col-10 d-flex justify-content-center">
-                <div className="border p-4">
-                  <h6
-                    className={`fw-normal text text-wrap text-break ${
-                      hideAyah ? "blurred-rectangle" : ""
-                    } `}
-                  >
-                    {testObj.ayahs[ayahIndex]}
-                  </h6>
-                </div>
+                <h6
+                  className={`fw-normal text text-wrap text-break ${
+                    hideAyah ? "hidden" : "visible"
+                  } `}
+                >
+                  {testObj.ayahs[ayahIndex]}
+                </h6>
               </div>
             </div>
             <div className="row my-3 d-flex justify-content-center m-2">
