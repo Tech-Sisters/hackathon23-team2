@@ -33,6 +33,7 @@ const SurahController = {
   getSurahHistory: async (req, res, next) => {
     try {
       const { auth_id, surahId } = req.query
+      console.log("auth, surah", auth_id, surahId)
 
       if (!auth_id || !surahId) {
         return res.status(400).send({ message: "auth_id and surahId are required" })
@@ -43,12 +44,12 @@ const SurahController = {
         return res.status(404).send({ message: "User not found" })
       }
 
-      const surah = user.juzzAmma.find((s) => s.surah.id === surahId)
-      if (!surah) {
+      const surah = user.juzzAmma.find((surah) => surah.id === surahId)
+      if (!surah.id) {
         return res.status(404).send({ message: "Surah not found" })
       }
 
-      res.status(200).send(surah.surah.surahTestHistory)
+      res.status(200).send(surah.surahTestHistory)
     } catch (error) {
       next(error)
     }
@@ -99,7 +100,12 @@ const SurahController = {
         .map((surah) => {
           return {
             id: surah.id,
-            name_simple: surah.name_simple
+            name: surah.name_simple,
+            surahTestHistory: {
+              initialStrength: null,
+              currentStrength: null,
+              revisions: []
+            }
           }
         })
 
