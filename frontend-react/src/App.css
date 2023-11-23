@@ -57,3 +57,10 @@
   border: none;
   width: 8rem;
 }
+.inputBorder{
+  border-radius: 4px;
+  border: 1px solid #ACB8C2;
+}
+.signupLoginBackgroundColor{
+  background-color: #FFF;
+}

@@ -5,6 +5,8 @@ import BeginTest from "./Components/BeginTest/BeginTest";
 import Test from "./Components/Test/Test";
 import HomeScreen from "./Components/HomeScreen/HomeScreen";
 import FinalRankingTest from "./Components/FinalRankingTest/FinalRankingTest";
+import SignUp from "./Components/SignUp/SignUp";
+import LogIn from "./Components/LogIn/LogIn";
 
 function App() {
   return (
@@ -15,6 +17,8 @@ function App() {
         <Route path="/begin-test" element={<BeginTest />} />
         <Route path="/test" element={<Test />} />
         <Route path="/end-test" element={<FinalRankingTest />} />
+        <Route path="/sign-up" element={<SignUp />} />
+        <Route path="/log-in" element={<LogIn />} />
       </Routes>
     </BrowserRouter>
   );
