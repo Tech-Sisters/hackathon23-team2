@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import "./Test.css";
+import ExitTest from "../ExitTest/ExitTest";
 
 const BeginTest = () => {
   const [surah, setSurah] = useState({});
@@ -15,7 +16,8 @@ const BeginTest = () => {
   };
   return (
     <>
-      <div className="test-page vh-100 d-flex justify-content-center align-items-center">
+      <div className="test-page vh-100 d-flex flex-column justify-content-center align-items-center">
+        <ExitTest />
         <div className="p-3 m-4 h-75 d-flex justify-content-center flex-grow-1">
           <div className="container-fluid py-5 border rounded test-container d-flex flex-column justify-content-between">
             <div className="row my-3">

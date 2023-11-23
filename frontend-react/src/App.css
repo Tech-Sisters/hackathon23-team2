@@ -49,3 +49,11 @@
 .isClicked{
   box-shadow: inset 0px 0px 5px rgba(0, 0, 0, 0.5);
 }
+.confirmButton {
+  background-color: #D39898;
+  color: #FFFFFF;
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  width: 8rem;
+}
