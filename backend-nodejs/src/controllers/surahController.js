@@ -1,5 +1,6 @@
 import UsersModel from "../models/User.js"
 import { capitalizeFirstLetter } from "./tools.js"
+import axios from "axios"
 
 const SurahController = {
   initialiseSurah: async (req, res, next) => {
@@ -85,8 +86,23 @@ const SurahController = {
     } catch (error) {
       next(error)
     }
-  }
+  },
 
+  getJuzzamma: async (req, res, next) => {
+    try {
+      // Step 1: Call the API
+      const response = await axios.get("https://api.quran.com/api/v4/juzs")
+      const juzs = response.data.juzs
+
+      // Step 2: Filter for Juz with id 30
+      const juz30 = juzs.find((juz) => juz.id === 30)
+
+      // Step 3: Return the response
+      res.json(juz30)
+    } catch (error) {
+      next(error)
+    }
+  }
 }
 
-export default SurahController;
+export default SurahController
