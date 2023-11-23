@@ -1,17 +1,23 @@
-import auth from "../firebaseInit.cjs";
+import firebase from "../firebaseInit.cjs";
 
 const authenticateUser = (req, res, next) => {
   const idToken = req.headers.authorization;
 
-  auth.verifyIdToken(idToken)
-    .then((decodedToken) => {
-      req.user = decodedToken; // Store user information in the request object if needed
-      next(); // Proceed to the next middleware or route handler
-    })
-    .catch((error) => {
-      console.error('Authentication failed:', error);
-      res.status(401).send('Unauthorized'); // Respond with an unauthorized status
-    });
-};
+  if (!idToken) {
+    return res.send({ message: "No token provided" }).status(401);
+  }
+
+  if (idToken && idToken.split(" ")[0] !== "Bearer") {
+    res.send({ message: "Invalid token" }).status(401);
+  }
+
+  const token = idToken.split(" ")[1];
+  firebase
+    .auth()
+    .verifyIdToken(token)
+    .then(() => next())
+    .catch(() => res.send({ message: "Could not authorize" }).status(403));
+}
+
 
 export default authenticateUser;
