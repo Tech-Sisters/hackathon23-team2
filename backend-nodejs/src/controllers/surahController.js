@@ -69,19 +69,17 @@ const SurahController = {
         return res.status(404).send({ message: "User not found" })
       }
 
-      const surahIndex = user.juzzAmma.findIndex((s) => s.surah.id === surahId)
+      const surahIndex = user.juzzAmma.findIndex((surah) => surah.id === surahId)
       if (surahIndex === -1) {
         return res.status(404).send({ message: "Surah not found" })
       }
-
       // Update currentStrength and add a new revision
       let strengthCapitalised = capitalizeFirstLetter(strength)
-      user.juzzAmma[surahIndex].surah.surahTestHistory.currentStrength = strengthCapitalised
-      user.juzzAmma[surahIndex].surah.surahTestHistory.revisions.unshift({
+      user.juzzAmma[surahIndex].surahTestHistory.currentStrength = strengthCapitalised
+      user.juzzAmma[surahIndex].surahTestHistory.revisions.unshift({
         date: new Date(), // Current date
         strength: strengthCapitalised
       })
-
       const updatedUser = await user.save()
       res.status(200).send(updatedUser)
     } catch (error) {
