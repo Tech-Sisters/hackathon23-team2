@@ -39,3 +39,13 @@
   border: none;
   width: 8rem;
 }
+.strengthBadge{
+  color: #FCFCFC;
+  font-size: 16px;
+  font-weight: normal;
+  border: none;
+  width: 6rem;
+}
+.isClicked{
+  box-shadow: inset 0px 0px 5px rgba(0, 0, 0, 0.5);
+}
