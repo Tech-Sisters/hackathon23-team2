@@ -90,15 +90,20 @@ const SurahController = {
 
   getJuzzamma: async (req, res, next) => {
     try {
-      // Step 1: Call the API
-      const response = await axios.get("https://api.quran.com/api/v4/juzs")
-      const juzs = response.data.juzs
+      const response = await axios.get("https://api.quran.com/api/v4/chapters")
+      const surahs = response.data.chapters
 
-      // Step 2: Filter for Juz with id 30
-      const juz30 = juzs.find((juz) => juz.id === 30)
+      // mapping only the surah id and the name
+      const juzzamma = surahs
+        .filter((surah) => surah.id >= 78 && surah.id <= 114)
+        .map((surah) => {
+          return {
+            id: surah.id,
+            name_simple: surah.name_simple
+          }
+        })
 
-      // Step 3: Return the response
-      res.json(juz30)
+      res.json(juzzamma)
     } catch (error) {
       next(error)
     }
