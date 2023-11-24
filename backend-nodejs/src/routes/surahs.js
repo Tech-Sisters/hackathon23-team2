@@ -10,6 +10,7 @@ const surahRouter = express.Router()
 surahRouter.post("/initialiseSurah", async (req, res, next) => {
   let allowFurtherActions = true;
   try {
+
     const { auth_id } = req.query;
     await surahController.initialiseSurah(req, res, () => {
       allowFurtherActions = false;
@@ -28,13 +29,14 @@ surahRouter.post("/initialiseSurah", async (req, res, next) => {
         res.status(200).send(updatedUser);
       }
     }
+
   } catch (err) {
     next(err)
   }
-});
-
+})
 
 // get the surahTestHistory for a specific surah
+
 surahRouter.get("/surahHistory", /*authenticateUser,*/ surahController.getSurahHistory);
 
 
@@ -57,12 +59,14 @@ surahRouter.put('/updateSurah', async (req, res, next) => {
       const updatedUser = await UsersModel.findOne({ auth_id })
       res.status(200).send(updatedUser);
     }
+
   } catch (err) {
     next(err)
   }
-});
-
+})
 
 surahRouter.get("/getJuzzamma", surahController.getJuzzamma)
+
+surahRouter.get("/ayat", surahController.getAyat)
 
 export default surahRouter

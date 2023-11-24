@@ -114,6 +114,18 @@ const SurahController = {
     } catch (error) {
       next(error)
     }
+  },
+
+  getAyat: async (req, res, next) => {
+    const { surahId } = req.query
+    try {
+      const response = await axios.get(`https://api.quran.com/api/v4/verses/by_chapter/${surahId}?fields=text_imlaei`)
+      const ayat = response.data.verses
+
+      res.send(ayat)
+    } catch (error) {
+      next(error)
+    }
   }
 }
 
