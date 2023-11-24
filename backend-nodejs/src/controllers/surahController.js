@@ -20,9 +20,14 @@ const SurahController = {
         return res.status(404).send({ message: "User not found" })
       }
 
+      if (juzzAmma === undefined || juzzAmma === null) {
+        return res.status(400).send({ message: "juzzAmma is required in the request body" });
+      }
+
       // Update juzzAmma for the found user
       user.juzzAmma = juzzAmma
-      const updatedUser = await user.save()
+      await user.save()
+
     } catch (error) {
       next(error)
     }
