@@ -24,6 +24,7 @@ const SurahController = {
       }
 
       // Update juzzAmma for the found user
+      user.juzzAmma = juzzAmma
       await user.save()
 
     } catch (error) {
