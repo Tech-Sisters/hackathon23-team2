@@ -23,7 +23,6 @@ const SurahController = {
       // Update juzzAmma for the found user
       user.juzzAmma = juzzAmma
       const updatedUser = await user.save()
-
     } catch (error) {
       next(error)
     }
@@ -48,7 +47,7 @@ const SurahController = {
         return res.status(404).send({ message: "Surah not found" })
       }
 
-      res.status(200).send(surah.surahTestHistory)
+      res.status(200).send(surah)
     } catch (error) {
       next(error)
     }
