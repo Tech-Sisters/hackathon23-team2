@@ -2,11 +2,16 @@ import express from "express"
 import mongoose from "mongoose"
 import listEndpoints from "express-list-endpoints"
 import cors from "cors"
+import './firebaseInit.cjs';
+
 import usersRouter from "./routes/users.js"
-import surahController from "./controllers/surahController.js"
 import surahRouter from "./routes/surahs.js"
 
+
+
 const app = express()
+
+
 const port = process.env.PORT || 3004
 
 
@@ -24,8 +29,10 @@ const corsOptions = {
 app.use(express.json())
 app.use(cors(corsOptions))
 
+
 app.use("/users", usersRouter)
 app.use("/surahs", surahRouter)
+
 
 // ---------------- SERVER ------------------
 

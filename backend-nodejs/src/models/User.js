@@ -33,6 +33,24 @@ const UserSchema = new mongoose.Schema({
     // commented out this line since fields are optional by default
     // and this was throwing an error
     // currentRevision only exists if the user has selected strength for one or more surahs
+  },
+  revisionSurahs: {
+    first_surah: {
+      name: {
+        type: String,
+      },
+      id: {
+        type: String,
+      }
+    },
+    second_surah: {
+      name: {
+        type: String,
+      },
+      id: {
+        type: String,
+      }
+    }
   }
 })
 
