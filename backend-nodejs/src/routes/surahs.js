@@ -20,8 +20,10 @@ surahRouter.post("/initialiseSurah", /*authenticateUser,*/ async (req, res, next
   }
 });
 
+
 // get the surahTestHistory for a specific surah
 surahRouter.get("/surahHistory", /*authenticateUser,*/ surahController.getSurahHistory);
+
 
 // update strenght of the surah, currentRevision and revisionSurahs 
 surahRouter.put('/updateSurah', /*authenticateUser,*/ async (req, res, next) => {
@@ -38,5 +40,7 @@ surahRouter.put('/updateSurah', /*authenticateUser,*/ async (req, res, next) => 
   }
 });
 
+
+surahRouter.get("/getJuzzamma", surahController.getJuzzamma)
 
 export default surahRouter

@@ -1,21 +1,17 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import "./Test.css";
 
 const BeginTest = () => {
-  const [ayahCounter, setAyahCounter] = useState(0);
+  const [surah, setSurah] = useState({});
   let navigate = useNavigate();
-  const testObj = {
-    surahName: "Al-Layl",
-    currentStrength: "Strong",
-    lastTestedOn: "14/11/2023",
-    ayahs: [
-      "ayahaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa1",
-      "ayah2",
-    ],
-  };
+  const location = useLocation();
+  useEffect(() => {
+    setSurah(location.state[0]);
+  }, [surah]);
+
   const onBeginTestHandle = () => {
-    navigate("/test", { state: testObj });
+    navigate("/test", { state: surah });
   };
   return (
     <>
@@ -24,7 +20,7 @@ const BeginTest = () => {
           <div className="container-fluid py-5 border rounded test-container d-flex flex-column justify-content-between">
             <div className="row my-3">
               <div className="col-12 d-flex flex-column align-items-center ">
-                <h2 className="surahName">{testObj.surahName}</h2>
+                <h2 className="surahName">{surah.surahName}</h2>
                 <hr className="border border-dark border-top-2 opacity-25 w-100" />
               </div>
             </div>
@@ -32,12 +28,12 @@ const BeginTest = () => {
               <div className="col-12 d-flex flex-column align-items-center ">
                 <h6 className="text p-2">Current Strength:</h6>
                 <span
-                  className={`badge rounded-pill p-2 ${testObj.currentStrength}Color`}
+                  className={`badge rounded-pill p-2 ${surah.currentStrength}Color`}
                 >
-                  {testObj.currentStrength}
+                  {surah.currentStrength}
                 </span>
                 <h6 className="text p-2">Last Tested On:</h6>
-                <h6 className="fw-normal text ">{testObj.lastTestedOn}</h6>
+                <h6 className="fw-normal text ">{surah.lastTestedOn}</h6>
               </div>
             </div>
             <div className="row my-3">

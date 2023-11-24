@@ -1,0 +1,12 @@
+.strengthButton{
+    color: #FCFCFC;
+    font-size: 16px;
+    font-weight: normal;
+    border: none;
+    width: 8rem;
+}
+.nextIcon{
+    cursor: pointer;
+    font-size: 2rem;
+    color: #5F5353;
+}
