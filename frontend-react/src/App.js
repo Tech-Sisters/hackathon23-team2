@@ -7,18 +7,20 @@ import HomeScreen from "./Components/HomeScreen/HomeScreen";
 import FinalRankingTest from "./Components/FinalRankingTest/FinalRankingTest";
 import SignUp from "./Components/SignUp/SignUp";
 import LogIn from "./Components/LogIn/LogIn";
+import SurahHistory from "./Components/SurahHistory/SurahHistory";
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<HomeScreen />} />
-        <Route path="/all-surahs" element={<AllSurahs />} />
+        <Route path="/" element={<AllSurahs />} />
+        <Route path="/home-screen" element={<HomeScreen />} />
         <Route path="/begin-test" element={<BeginTest />} />
         <Route path="/test" element={<Test />} />
         <Route path="/end-test" element={<FinalRankingTest />} />
         <Route path="/sign-up" element={<SignUp />} />
         <Route path="/log-in" element={<LogIn />} />
+        <Route path="/surah-history" element={<SurahHistory />} />
       </Routes>
     </BrowserRouter>
   );

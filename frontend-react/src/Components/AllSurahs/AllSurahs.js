@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import { BsCircleFill } from "react-icons/bs";
+import { useNavigate } from "react-router-dom";
 import "./AllSurahs.css";
 const AllSurahs = () => {
+  let navigate = useNavigate();
   const [surahsList, setSurahsList] = useState([
     {
       id: 0,
@@ -32,7 +34,9 @@ const AllSurahs = () => {
       )
     );
   };
-
+  const handleClickSubmit = () => {
+    navigate("/home-screen");
+  };
   return (
     <>
       <div className="container-fluid">
@@ -114,7 +118,12 @@ const AllSurahs = () => {
         </div>
         <div className="row justify-content-center justify-content-lg-end">
           <div className="col-4">
-            <button className="submitButton rounded-pill p-2">Sumbit</button>
+            <button
+              className="submitButton rounded-pill p-2"
+              onClick={handleClickSubmit}
+            >
+              Sumbit
+            </button>
           </div>
         </div>
       </div>

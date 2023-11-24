@@ -4,6 +4,7 @@ import "./FinalRankingTest.css";
 import { BsArrowRightCircle } from "react-icons/bs";
 
 const FinalRankingTest = () => {
+  let navigate = useNavigate();
   const [selectedStrength, setSelectedStrength] = useState("");
   const [nextIconVisible, setNextIconVisible] = useState(false);
   const [showConfirmationPage, setShowConfirmationPage] = useState(false);
@@ -14,7 +15,12 @@ const FinalRankingTest = () => {
     setNextIconVisible(true);
   };
   const handleNextButtonClick = () => {
+    //update strength in api
     setShowConfirmationPage(true);
+  };
+  const handleSurahHistoryNavigate = () => {
+    //send surah id to api
+    navigate("/surah-history", { state: testObj.id });
   };
   return (
     <>
@@ -94,7 +100,10 @@ const FinalRankingTest = () => {
             {showConfirmationPage ? (
               <div className="row d-flex justify-content-center m-2">
                 <div className="col-12 d-flex justify-content-center">
-                  <button className="submitButton rounded-pill p-2 w-75">
+                  <button
+                    className="submitButton rounded-pill p-2 w-75"
+                    onClick={handleSurahHistoryNavigate}
+                  >
                     View Surah History
                   </button>
                 </div>
