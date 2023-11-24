@@ -1,11 +1,12 @@
 import express from "express"
-const surahRouter = express.Router()
 import surahController from "../controllers/surahController.js"
 import currentRevisionController from "../controllers/currentRevisionController.js"
 import UsersModel from "../models/User.js"
+import authenticateUser from "../middleware/authenticateUser.js"
+
+const surahRouter = express.Router()
 
 // initilise the surahs for the user
-//TODO add authentication for this route
 surahRouter.post("/initialiseSurah", async (req, res, next) => {
   let allowFurtherActions = true;
   try {
@@ -32,12 +33,12 @@ surahRouter.post("/initialiseSurah", async (req, res, next) => {
   }
 });
 
-// get the surahTestHistory for a specific surah
-// TODO add authentication for this route
-surahRouter.get("/surahHistory", surahController.getSurahHistory);
 
-// update strenght of the surah and 
-// TODO add authentication for this route
+// get the surahTestHistory for a specific surah
+surahRouter.get("/surahHistory", /*authenticateUser,*/ surahController.getSurahHistory);
+
+
+// update strenght of the surah, currentRevision and revisionSurahs
 surahRouter.put('/updateSurah', async (req, res, next) => {
   let allowFurtherActions = true;
   try {
@@ -61,5 +62,7 @@ surahRouter.put('/updateSurah', async (req, res, next) => {
   }
 });
 
+
+surahRouter.get("/getJuzzamma", surahController.getJuzzamma)
 
 export default surahRouter
