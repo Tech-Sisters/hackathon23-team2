@@ -1,16 +1,17 @@
 import express from "express"
-const surahRouter = express.Router()
 import surahController from "../controllers/surahController.js"
 import currentRevisionController from "../controllers/currentRevisionController.js"
 import UsersModel from "../models/User.js"
+import authenticateUser from "../middleware/authenticateUser.js"
+
+const surahRouter = express.Router()
 
 // initilise the surahs for the user
-//TODO add authentication for this route
-surahRouter.post("/initialiseSurah", async (req, res, next) => {
+surahRouter.post("/initialiseSurah", /*authenticateUser,*/ async (req, res, next) => {
   try {
     const { auth_id } = req.query;
-    await surahController.initialiseSurah(req, res, next),
-      await currentRevisionController.initialiseCurrentRevision(req, res, next)
+    await surahController.initialiseSurah(req, res, next);
+    await currentRevisionController.initialiseCurrentRevision(req, res, next);
     // sending response after both controllers have finished updates
     const updatedUser = await UsersModel.findOne({ auth_id })
     res.status(200).send(updatedUser);
@@ -21,17 +22,11 @@ surahRouter.post("/initialiseSurah", async (req, res, next) => {
 
 
 // get the surahTestHistory for a specific surah
-// TODO add authentication for this route
-surahRouter.get("/surahHistory", surahController.getSurahHistory)
+surahRouter.get("/surahHistory", /*authenticateUser,*/ surahController.getSurahHistory);
 
 
-// update the surah revision history
-//TODO add authentication to this route
-surahRouter.put("/updateSurah", surahController.updateSurah)
-
-// update strenght of the surah and 
-// TODO add authentication for this route
-surahRouter.put('/updateSurah', async (req, res, next) => {
+// update strenght of the surah, currentRevision and revisionSurahs 
+surahRouter.put('/updateSurah', /*authenticateUser,*/ async (req, res, next) => {
   try {
     const { auth_id } = req.query;
 

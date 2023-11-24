@@ -26,15 +26,15 @@ const CurrentRevisionController = {
       // *** Initial values for revisionSurahs ***
       // find initial values for revisionSurahs (two random surahs that have initialStrength)
       const surahsWithInitialStrength = user.juzzAmma.filter(item =>
-        item.surah && item.surah.surahTestHistory && item.surah.surahTestHistory.initialStrength !== undefined
+        item && item.surahTestHistory && item.surahTestHistory.initialStrength !== undefined
       );
 
       const firstTwoSurahsWithInitialStrength = surahsWithInitialStrength.slice(0, 2);
 
       // extracting id and name
       const idsAndNamesOfFirstTwoSurahs = firstTwoSurahsWithInitialStrength.map(item => ({
-        id: item.surah.id,
-        name: item.surah.name
+        id: item.id,
+        name: item.name
       }));
 
       // Inserting the IDs and names into the user.revisionSurahs object
@@ -63,10 +63,11 @@ const CurrentRevisionController = {
       const { auth_id, revisedSurah } = req.query
 
       if (!auth_id) {
-        return res.status(400).send({ message: "username is required as a query parameter" })
+        return res.status(400).send({ message: "auth_id is required as a query parameter" })
       }
 
       const user = await UsersModel.findOne({ auth_id })
+      console.log('this is the user to update user', user)
       if (!user) {
         return res.status(404).send({ message: "User not found" })
       }
@@ -102,7 +103,7 @@ const CurrentRevisionController = {
 
 
       const findOldestRevisionWithStrength = async (user, strength) => {
-        const flattenedSurahTestHistories = [].concat(...user.juzzAmma.map(item => item.surah));
+        const flattenedSurahTestHistories = [].concat(...user.juzzAmma);
 
         // these are used as back-up in case no surahs with current strenght
         const strengthsOrder = ['Weak', 'Medium', 'Strong'];
