@@ -8,6 +8,7 @@ import FinalRankingTest from "./Components/FinalRankingTest/FinalRankingTest";
 import SignUp from "./Components/SignUp/SignUp";
 import LogIn from "./Components/LogIn/LogIn";
 import SurahHistory from "./Components/SurahHistory/SurahHistory";
+import Profile from "./Components/Profile/Profile";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
         <Route path="/sign-up" element={<SignUp />} />
         <Route path="/log-in" element={<LogIn />} />
         <Route path="/surah-history" element={<SurahHistory />} />
+        <Route path="/profile" element={<Profile />} />
       </Routes>
     </BrowserRouter>
   );
