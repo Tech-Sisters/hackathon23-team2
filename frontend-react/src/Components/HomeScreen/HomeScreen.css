@@ -1,0 +1,19 @@
+.WhiteBackground{
+    background-color: #FCFCFC;
+}
+.CategoryBorder{
+    border-radius: 25px;
+}
+.FontSize16{
+    font-size: 16px;
+}
+.FontSize12{
+    font-size: 12px;
+}
+.ScrollTable{
+    max-height: 300px;
+    overflow-y: auto;
+}
+.AllFilter{
+    background-color: #6E6A88;
+}

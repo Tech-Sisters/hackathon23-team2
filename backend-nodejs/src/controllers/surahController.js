@@ -24,7 +24,6 @@ const SurahController = {
       user.juzzAmma = juzzAmma
       const updatedUser = await user.save()
 
-      res.status(200).send(updatedUser)
     } catch (error) {
       next(error)
     }
@@ -80,8 +79,8 @@ const SurahController = {
         date: new Date(), // Current date
         strength: strengthCapitalised
       })
-      const updatedUser = await user.save()
-      res.status(200).send(updatedUser)
+
+      await user.save()
     } catch (error) {
       next(error)
     }

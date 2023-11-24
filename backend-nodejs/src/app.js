@@ -3,7 +3,6 @@ import mongoose from "mongoose"
 import listEndpoints from "express-list-endpoints"
 import cors from "cors"
 import usersRouter from "./routes/users.js"
-import surahController from "./controllers/surahController.js"
 import surahRouter from "./routes/surahs.js"
 
 const app = express()
@@ -39,3 +38,5 @@ mongoose.connection.on("connected", () => {
     console.log("server is running on port:", port)
   })
 })
+
+
