@@ -1,34 +1,32 @@
 import mongoose from "mongoose"
 
 const SurahSchema = new mongoose.Schema({
-  surah: {
-    id: {
+  id: {
+    type: String,
+    required: true
+  },
+  name: {
+    type: String,
+    required: true
+  },
+  surahTestHistory: {
+    initialStrength: {
       type: String,
-      required: true
+      enum: ["Strong", "Medium", "Weak"]
     },
-    name: {
+    currentStrength: {
       type: String,
-      required: true
+      enum: ["Strong", "Medium", "Weak"]
     },
-    surahTestHistory: {
-      initialStrength: {
-        type: String,
-        enum: ["Strong", "Medium", "Weak"]
-      },
-      currentStrength: {
-        type: String,
-        enum: ["Strong", "Medium", "Weak"]
-      },
-      revisions: [
-        {
-          date: Date,
-          strength: {
-            type: String,
-            enum: ["Strong", "Medium", "Weak"]
-          }
+    revisions: [
+      {
+        date: Date,
+        strength: {
+          type: String,
+          enum: ["Strong", "Medium", "Weak"]
         }
-      ]
-    }
+      }
+    ]
   }
 })
 export { SurahSchema } // Export the schema
