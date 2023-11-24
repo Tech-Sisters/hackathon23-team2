@@ -67,7 +67,7 @@ const CurrentRevisionController = {
       }
 
       const user = await UsersModel.findOne({ auth_id })
-      console.log('this is the user to update user', user)
+
       if (!user) {
         return res.status(404).send({ message: "User not found" })
       }
