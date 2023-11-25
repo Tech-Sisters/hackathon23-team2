@@ -1,16 +1,12 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../../firebase";
 const LogIn = () => {
   let navigate = useNavigate();
   const [formData, setFormData] = useState({
-    name: "",
     email: "",
     password: "",
-  });
-  const [formDataError, setFormDataError] = useState({
-    nameError: "",
-    emailError: "",
-    passwordError: "",
   });
   const handleInputChange = (e) => {
     const { id, value } = e.target;
@@ -18,46 +14,18 @@ const LogIn = () => {
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-    let isPasswordValid = validatePassword();
-    let isEmailValid = validateEmail(formData.email);
-    if (!isEmailValid || !isPasswordValid) {
-      return;
-    }
-    navigate("/");
-    console.log(formData);
-  };
-  const validateEmail = (email) => {
-    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!regex.test(email)) {
-      setFormDataError((prevFormDataError) => ({
-        ...prevFormDataError,
-        emailError: "Please enter a valid email address",
-      }));
-      return false;
-    } else {
-      setFormDataError((prevFormDataError) => ({
-        ...prevFormDataError,
-        emailError: "",
-      }));
-      return true;
-    }
+    signInWithEmailAndPassword(auth, formData.email, formData.password)
+      .then((userCredential) => {
+        const user = userCredential.user;
+        navigate("/", { state: formData.password });
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log(errorCode, errorMessage);
+      });
   };
 
-  const validatePassword = () => {
-    if (formData.password.length < 5) {
-      setFormDataError((prevFormDataError) => ({
-        ...prevFormDataError,
-        passwordError: "Password should be at least 5 characters long",
-      }));
-      return false;
-    } else {
-      setFormDataError((prevFormDataError) => ({
-        ...prevFormDataError,
-        passwordError: "",
-      }));
-      return true;
-    }
-  };
   return (
     <>
       <div className="container-fluid p-4 signupBackgroundColor">
@@ -81,11 +49,6 @@ const LogIn = () => {
                     value={formData.email}
                     onChange={handleInputChange}
                   />
-                  {formDataError.emailError && (
-                    <p className="text-danger mb-3">
-                      {formDataError.emailError}
-                    </p>
-                  )}
                   <label htmlFor="password" className="form-label text">
                     Password
                   </label>
@@ -96,11 +59,6 @@ const LogIn = () => {
                     value={formData.password}
                     onChange={handleInputChange}
                   />
-                  {formDataError.passwordError && (
-                    <p className="text-danger mb-3">
-                      {formDataError.passwordError}
-                    </p>
-                  )}
                 </div>
               </div>
               <div className="row justify-content-start mb-3">

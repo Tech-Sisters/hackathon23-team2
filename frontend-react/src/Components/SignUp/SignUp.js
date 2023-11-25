@@ -1,13 +1,19 @@
-import { Link } from "react-router-dom";
-import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../../firebase";
+import axios from "axios";
+import { API_ENDPOINT } from "../../config";
+
 const SignUp = () => {
+  let navigate = useNavigate();
   const [formData, setFormData] = useState({
-    name: "",
+    username: "",
     email: "",
     password: "",
   });
   const [formDataError, setFormDataError] = useState({
-    nameError: "",
+    usernameError: "",
     emailError: "",
     passwordError: "",
   });
@@ -15,15 +21,37 @@ const SignUp = () => {
     const { id, value } = e.target;
     setFormData({ ...formData, [id]: value });
   };
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    let isNameValid = validateName();
+    let isUsernameValid = validateUsername();
     let isPasswordValid = validatePassword();
     let isEmailValid = validateEmail(formData.email);
-    if (!isNameValid || !isEmailValid || !isPasswordValid) {
-      return;
+    if (isUsernameValid && isEmailValid && isPasswordValid) {
+      try {
+        await createUserWithEmailAndPassword(
+          auth,
+          formData.email,
+          formData.password
+        );
+        const userData = {
+          username: formData.username,
+          email: formData.email,
+          auth_id: formData.password,
+        };
+        const response = await axios.post(
+          `${API_ENDPOINT}/users/signup`,
+          userData
+        );
+        setFormData((prevState) => ({
+          username: userData.username,
+          email: formData.email,
+          auth_id: formData.password,
+        }));
+        navigate("/", { state: formData.password });
+      } catch (error) {
+        console.error("Error signing up:", error);
+      }
     }
-    console.log(formData);
   };
   const validateEmail = (email) => {
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -42,8 +70,8 @@ const SignUp = () => {
     }
   };
 
-  const validateName = () => {
-    if (formData.name.trim().length < 5) {
+  const validateUsername = () => {
+    if (formData.username.trim().length < 5) {
       setFormDataError((prevFormDataError) => ({
         ...prevFormDataError,
         nameError: "Name should be at least 5 characters long",
@@ -58,10 +86,10 @@ const SignUp = () => {
     }
   };
   const validatePassword = () => {
-    if (formData.password.length < 5) {
+    if (formData.password.length < 6) {
       setFormDataError((prevFormDataError) => ({
         ...prevFormDataError,
-        passwordError: "Password should be at least 5 characters long",
+        passwordError: "Password should be at least 6 characters long",
       }));
       return false;
     } else {
@@ -85,14 +113,14 @@ const SignUp = () => {
             <form onSubmit={handleSubmit}>
               <div className="row">
                 <div className="col-12">
-                  <label htmlFor="name" className="form-label text">
+                  <label htmlFor="username" className="form-label text">
                     Name
                   </label>
                   <input
                     type="text"
                     className="form-control inputBorder mb-3"
-                    id="name"
-                    value={formData.name}
+                    id="username"
+                    value={formData.username}
                     onChange={handleInputChange}
                   />
                   {formDataError.nameError && (

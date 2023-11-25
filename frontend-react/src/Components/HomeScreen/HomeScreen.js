@@ -1,8 +1,10 @@
 import "./HomeScreen.css";
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 const HomeScreen = () => {
   let navigate = useNavigate();
+  let location = useLocation();
+  let auth_id = location.state;
   const [filteredSurahs, setFilteredSurahs] = useState([]);
   const [selectedStrength, setSelectedStrength] = useState("All");
   const [surahsList, setSurahsList] = useState([
