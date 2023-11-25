@@ -122,7 +122,7 @@ const AllSurahs = () => {
               className="submitButton rounded-pill p-2"
               onClick={handleClickSubmit}
             >
-              Sumbit
+              Submit
             </button>
           </div>
         </div>

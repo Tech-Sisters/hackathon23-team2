@@ -17,12 +17,17 @@ const CircularChart = () => {
     chartInstance.current = new Chart(context, {
       type: "doughnut",
       data: {
-        labels: [`Weak: ${s}`, `Medium: ${s}`, `Strong: ${s}`],
+        labels: [
+          `Weak: ${s} Surah`,
+          `Medium: ${s} Surah`,
+          `Strong: ${s} Surah`,
+          `Not Selected: ${s} Surah`,
+        ],
         datasets: [
           {
             label: "Circular Chart",
-            data: [15, 15, 15],
-            backgroundColor: ["#D39898", "#D3C398", "#A7C39F"],
+            data: [15, 15, 15, 30],
+            backgroundColor: ["#D39898", "#D3C398", "#A7C39F", "#847EA7"],
           },
         ],
       },
