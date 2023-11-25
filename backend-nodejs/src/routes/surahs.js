@@ -7,7 +7,7 @@ import authenticateUser from "../middleware/authenticateUser.js"
 const surahRouter = express.Router()
 
 // initilise the surahs for the user
-surahRouter.post("/initialiseSurah", async (req, res, next) => {
+surahRouter.post("/initialiseSurah", /*authenticateUser,*/ async (req, res, next) => {
   let allowFurtherActions = true;
   try {
 
@@ -36,12 +36,11 @@ surahRouter.post("/initialiseSurah", async (req, res, next) => {
 })
 
 // get the surahTestHistory for a specific surah
-
 surahRouter.get("/surahHistory", /*authenticateUser,*/ surahController.getSurahHistory);
 
 
 // update strenght of the surah, currentRevision and revisionSurahs
-surahRouter.put('/updateSurah', async (req, res, next) => {
+surahRouter.put('/updateSurah', /*authenticateUser,*/async (req, res, next) => {
   let allowFurtherActions = true;
   try {
     const { auth_id } = req.query;
@@ -69,6 +68,6 @@ surahRouter.get("/getJuzzamma", surahController.getJuzzamma)
 
 surahRouter.get("/ayat", surahController.getAyat)
 
-surahRouter.get("/surahStrengthCount", surahController.getSurahStrengthCount)
+surahRouter.get("/surahStrengthCount", /*authenticateUser,*/ surahController.getSurahStrengthCount)
 
 export default surahRouter

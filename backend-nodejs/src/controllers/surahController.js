@@ -164,7 +164,6 @@ const SurahController = {
       });
 
 
-      console.log(strengths);
       res.status(200).send(strengths)
 
     } catch (error) {
