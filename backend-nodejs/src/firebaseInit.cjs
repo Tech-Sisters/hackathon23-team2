@@ -13,7 +13,7 @@ if (fs.existsSync(serviceAccountPath)) {
     credential: admin.credential.cert(serviceAccount)
   });
 } else {
-  console.log('Firebase serviceAccountKey file not find, no authentication');
+  console.log('Firebase serviceAccountKey file not found, no authentication');
   firebase = admin.initializeApp({
   });
 }

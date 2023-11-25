@@ -69,4 +69,6 @@ surahRouter.get("/getJuzzamma", surahController.getJuzzamma)
 
 surahRouter.get("/ayat", surahController.getAyat)
 
+surahRouter.get("/surahStrengthCount", surahController.getSurahStrengthCount)
+
 export default surahRouter

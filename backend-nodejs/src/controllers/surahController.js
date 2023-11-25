@@ -126,7 +126,52 @@ const SurahController = {
     } catch (error) {
       next(error)
     }
+  },
+
+  getSurahStrengthCount: async (req, res, next) => {
+    try {
+      const { auth_id } = req.query
+
+      if (!auth_id) {
+        return res.status(400).send({ message: "auth_id is required" })
+      }
+
+      const user = await UsersModel.findOne({ auth_id })
+      if (!user) {
+        return res.status(404).send({ message: "User not found" })
+      }
+
+      const strengths = {
+        strongCount: 0,
+        mediumCount: 0,
+        weakCount: 0,
+        emptyCount: 0,
+      }
+
+
+      user.juzzAmma.forEach((item) => {
+        const currentStrength = item.surahTestHistory.currentStrength;
+
+        if (currentStrength === 'Strong') {
+          strengths.strongCount++;
+        } else if (currentStrength === 'Medium') {
+          strengths.mediumCount++;
+        } else if (currentStrength === 'Weak') {
+          strengths.weakCount++;
+        } else if (currentStrength === null) {
+          strengths.emptyCount++;
+        }
+      });
+
+
+      console.log(strengths);
+      res.status(200).send(strengths)
+
+    } catch (error) {
+      next(error)
+    }
   }
 }
+
 
 export default SurahController
