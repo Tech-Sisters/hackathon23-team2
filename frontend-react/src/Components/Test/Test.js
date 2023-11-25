@@ -2,6 +2,7 @@ import { useState } from "react";
 import "../BeginTest/Test.css";
 import "./Test.css";
 import { useLocation, useNavigate } from "react-router-dom";
+import ExitTest from "../ExitTest/ExitTest";
 const Test = () => {
   let navigate = useNavigate();
   const location = useLocation();
@@ -39,7 +40,8 @@ const Test = () => {
   };
   return (
     <>
-      <div className="test-page vh-100 d-flex justify-content-center align-items-center">
+      <div className="test-page vh-100 d-flex flex-column justify-content-center align-items-center">
+        <ExitTest />
         <div className="p-3 m-4 h-75 d-flex justify-content-center">
           <div className="container-fluid py-5 border rounded test-container d-flex flex-column justify-content-between">
             <div className="row my-3">

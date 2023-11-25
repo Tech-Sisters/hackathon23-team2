@@ -1,8 +1,10 @@
 import "./HomeScreen.css";
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 const HomeScreen = () => {
   let navigate = useNavigate();
+  let location = useLocation();
+  let auth_id = location.state;
   const [filteredSurahs, setFilteredSurahs] = useState([]);
   const [selectedStrength, setSelectedStrength] = useState("All");
   const [surahsList, setSurahsList] = useState([
@@ -84,8 +86,9 @@ const HomeScreen = () => {
             </div>
             {surahsList.map((surah) => (
               <div
-                key={surah.id}
                 className="row my-3 CategoryBorder WhiteBackground text p-3 d-flex justify-content-center"
+                onClick={() => handleClickTestSurah(surah.id)}
+                key={surah.id}
               >
                 <div className="col-8">
                   <div className="row">
@@ -101,12 +104,11 @@ const HomeScreen = () => {
                 </div>
                 <div className="col-4 d-flex justify-content-center">
                   <div className="align-self-center">
-                    <button
-                      className={`${surah.currentStrength}Color strengthBadge rounded-pill m-2`}
-                      onClick={() => handleClickTestSurah(surah.id)}
+                    <div
+                      className={`${surah.currentStrength}Color strengthBadge rounded-pill m-2 text-center`}
                     >
                       Test
-                    </button>
+                    </div>
                   </div>
                 </div>
               </div>
