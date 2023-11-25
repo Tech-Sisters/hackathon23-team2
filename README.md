@@ -26,14 +26,27 @@
     🧐 The Idea
   </h2>
   <p>
-    We wanted to create a product that will be of benefit to the muslim community, focusing on Qur'an memorisation.
+    A product that will be of benefit to the muslim community, focusing on Qur'an memorisation and a female audience.
   <p>
   <h2>
     🧐 The Solution
   </h2>
   <p>
-  
+  An application where users can:
+    <ul>
+      <li>Complete daily tests with a focus on their weaker Surahs.</li>
+      <li>Take initiative and engage in their own self-initialised tests.</li>
+      <li>Get personalised reports and insights of their Qur'an hustory.</li>
+      <li>Be part of a community of like-minded Muslim women who are actively engaging in strengthening their memorisation.</li>
+    </ul>
   <p>
+  <h2>
+    🧐 The Prototype
+  </h2>
+  <p>
+  The prototype has been built and designed as a mobile-first fullstack web application, as this would make the transition to a mobile app much smoother.
+We have defined and implemented the core funtionality:
+ insert diagram off app flow
 </div>
 
 
