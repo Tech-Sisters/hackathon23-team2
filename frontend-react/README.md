@@ -1,7 +1,3 @@
-<p align="center">
-  <img src="/assets/tazkeer_banner_dark.png" alt="Tazkeer Banner"/>
-</p>
-
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="/assets/tazkeer_banner_dark.png" alt="Tazkeer Banner">
+</p>
+
 # Instruction to the team:
 
 ## When working on the project's frontend or backend:
