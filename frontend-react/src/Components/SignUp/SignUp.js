@@ -28,7 +28,7 @@ const SignUp = () => {
     let isEmailValid = validateEmail(formData.email);
     if (isUsernameValid && isEmailValid && isPasswordValid) {
       try {
-        await createUserWithEmailAndPassword(
+        const userCredential = await createUserWithEmailAndPassword(
           auth,
           formData.email,
           formData.password
@@ -36,7 +36,7 @@ const SignUp = () => {
         const userData = {
           username: formData.username,
           email: formData.email,
-          auth_id: formData.password,
+          auth_id: userCredential.user.uid,
         };
         const response = await axios.post(
           `${API_ENDPOINT}/users/signup`,
@@ -45,9 +45,8 @@ const SignUp = () => {
         setFormData((prevState) => ({
           username: userData.username,
           email: formData.email,
-          auth_id: formData.password,
         }));
-        navigate("/", { state: formData.password });
+        navigate("/all-surahs", { state: userData.auth_id });
       } catch (error) {
         console.error("Error signing up:", error);
       }
@@ -74,13 +73,13 @@ const SignUp = () => {
     if (formData.username.trim().length < 5) {
       setFormDataError((prevFormDataError) => ({
         ...prevFormDataError,
-        nameError: "Name should be at least 5 characters long",
+        usernameError: "Name should be at least 5 characters long",
       }));
       return false;
     } else {
       setFormDataError((prevFormDataError) => ({
         ...prevFormDataError,
-        nameError: "",
+        usernameError: "",
       }));
       return true;
     }

@@ -16,8 +16,7 @@ const LogIn = () => {
     e.preventDefault();
     signInWithEmailAndPassword(auth, formData.email, formData.password)
       .then((userCredential) => {
-        const user = userCredential.user;
-        navigate("/", { state: formData.password });
+        navigate("/all-surahs", { state: userCredential.user.uid });
       })
       .catch((error) => {
         const errorCode = error.code;

@@ -1,5 +1,5 @@
 import "./App.css";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import AllSurahs from "./Components/AllSurahs/AllSurahs";
 import BeginTest from "./Components/BeginTest/BeginTest";
 import Test from "./Components/Test/Test";
@@ -10,14 +10,14 @@ import LogIn from "./Components/LogIn/LogIn";
 import SurahHistory from "./Components/SurahHistory/SurahHistory";
 import Profile from "./Components/Profile/Profile";
 import Navbar from "./Components/Navbar/Navbar";
-
+import { auth } from "./firebase";
 function App() {
   return (
     <>
-      <Navbar />
       <BrowserRouter>
+        <Navbar />
         <Routes>
-          <Route path="/" element={<AllSurahs />} />
+          <Route path="/all-surahs" element={<AllSurahs />} />
           <Route path="/home-screen" element={<HomeScreen />} />
           <Route path="/begin-test" element={<BeginTest />} />
           <Route path="/test" element={<Test />} />
