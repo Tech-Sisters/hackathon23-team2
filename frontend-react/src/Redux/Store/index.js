@@ -3,25 +3,25 @@ import { persistStore, persistReducer } from "redux-persist"
 import localStorage from "redux-persist/es/storage"
 import profileReducer from "../Reducers/profileReducer"
 
-// const userReducer = combineReducers({
-//   currentUser: profileReducer
-// })
+const userReducer = combineReducers({
+  currentUser: profileReducer
+})
 
-// const persistConfig = {
-//   key: "root",
-//   storage: localStorage,
-//   whitelist: ["currentUser", "accessToken"]
-// }
+const persistConfig = {
+  key: "root",
+  storage: localStorage,
+  whitelist: ["currentUser", "accessToken"]
+}
 
-// const persistedReducer = persistReducer(persistConfig, userReducer)
+const persistedReducer = persistReducer(persistConfig, userReducer)
 
-// export const store = configureStore({
-//   reducer: persistedReducer,
+export const store = configureStore({
+  reducer: persistedReducer,
 
-//   middleware: (getDefaultMiddleware) =>
-//     getDefaultMiddleware({
-//       serializableCheck: false
-//     })
-// })
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: false
+    })
+})
 
-// export const persistor = persistStore(store)
+export const persistor = persistStore(store)

@@ -31,25 +31,33 @@ const SignUp = () => {
       try {
         const userCredential = await createUserWithEmailAndPassword(auth, formData.email, formData.password)
 
-        console.log("------ User Credential:", userCredential.user.uid)
         const firebaseUid = userCredential.user.uid
+        const accessToken = userCredential.user.accessToken
+        console.log("------ User Credentials:", userCredential, firebaseUid, accessToken)
         const userData = {
           username: formData.username,
           email: formData.email,
           auth_id: firebaseUid
         }
-        const response = await axios.post(`${API_ENDPOINT}/users/signup`, userData)
+        // const response = await axios.post(`${API_ENDPOINT}/users/signup`, userData)
+        getAccessToken(userData, accessToken)
+
+        console.log("getting access token in signup")
+
         setFormData((prevState) => ({
           username: userData.username,
           email: formData.email,
           auth_id: firebaseUid
         }))
-        console.log("-----response", response)
-        if (response.ok) {
-          navigate("/all-surahs", { state: firebaseUid })
-        } else {
-          console.error("-----error")
-        }
+
+        console.log("resetting signup")
+        navigate("/all-surahs", { state: firebaseUid })
+        // console.log("-----response", response)
+        // if (response.ok) {
+        //   navigate("/all-surahs", { state: firebaseUid })
+        // } else {
+        //   console.error("-----error")
+        // }
       } catch (error) {
         console.error("Error signing up:", error)
       }
