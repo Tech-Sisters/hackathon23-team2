@@ -1,27 +1,27 @@
-import { useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
-import "./FinalRankingTest.css";
-import { BsArrowRightCircle } from "react-icons/bs";
+import { useState } from "react"
+import { useLocation, useNavigate } from "react-router-dom"
+import "./FinalRankingTest.css"
+import { BsArrowRightCircle } from "react-icons/bs"
 
 const FinalRankingTest = () => {
-  let navigate = useNavigate();
-  const [selectedStrength, setSelectedStrength] = useState("");
-  const [nextIconVisible, setNextIconVisible] = useState(false);
-  const [showConfirmationPage, setShowConfirmationPage] = useState(false);
-  const location = useLocation();
-  const { testObj, ayahHelpCounter } = location.state;
+  let navigate = useNavigate()
+  const [selectedStrength, setSelectedStrength] = useState("")
+  const [nextIconVisible, setNextIconVisible] = useState(false)
+  const [showConfirmationPage, setShowConfirmationPage] = useState(false)
+  const location = useLocation()
+  const { testObj, ayahHelpCounter } = location.state
   const handleSelectedStrength = (strength) => {
-    setSelectedStrength(strength);
-    setNextIconVisible(true);
-  };
+    setSelectedStrength(strength)
+    setNextIconVisible(true)
+  }
   const handleNextButtonClick = () => {
     //update strength in api
-    setShowConfirmationPage(true);
-  };
+    setShowConfirmationPage(true)
+  }
   const handleSurahHistoryNavigate = () => {
     //send surah id to api
-    navigate("/surah-history", { state: testObj.id });
-  };
+    navigate("/surah-history", { state: testObj.id })
+  }
   return (
     <>
       <div className="test-page vh-100 d-flex justify-content-center align-items-center">
@@ -52,17 +52,13 @@ const FinalRankingTest = () => {
 
             <div className="row  d-flex justify-content-center m-2">
               <div className="col-10 d-flex justify-content-center">
-                <h6 className="fw-normal text">
-                  How strong do you feel in this Surah?
-                </h6>
+                <h6 className="fw-normal text">How strong do you feel in this Surah?</h6>
               </div>
             </div>
             {showConfirmationPage ? (
               <div className="row d-flex justify-content-center m-2">
                 <div className="col-12 d-flex justify-content-center">
-                  <button
-                    className={`${selectedStrength}Color strengthButton rounded-pill p-2 m-2`}
-                  >
+                  <button className={`${selectedStrength}Color strengthButton rounded-pill p-2 m-2`}>
                     {selectedStrength}
                   </button>
                 </div>
@@ -100,10 +96,7 @@ const FinalRankingTest = () => {
             {showConfirmationPage ? (
               <div className="row d-flex justify-content-center m-2">
                 <div className="col-12 d-flex justify-content-center">
-                  <button
-                    className="submitButton rounded-pill p-2 w-75"
-                    onClick={handleSurahHistoryNavigate}
-                  >
+                  <button className="submitButton rounded-pill p-2 w-75" onClick={handleSurahHistoryNavigate}>
                     View Surah History
                   </button>
                 </div>
@@ -111,14 +104,7 @@ const FinalRankingTest = () => {
             ) : (
               <div className="row d-flex justify-content-center m-2">
                 <div className="col-12 d-flex justify-content-end">
-                  {nextIconVisible ? (
-                    <BsArrowRightCircle
-                      className="nextIcon"
-                      onClick={handleNextButtonClick}
-                    />
-                  ) : (
-                    ""
-                  )}
+                  {nextIconVisible ? <BsArrowRightCircle className="nextIcon" onClick={handleNextButtonClick} /> : ""}
                 </div>
               </div>
             )}
@@ -126,6 +112,6 @@ const FinalRankingTest = () => {
         </div>
       </div>
     </>
-  );
-};
-export default FinalRankingTest;
+  )
+}
+export default FinalRankingTest
