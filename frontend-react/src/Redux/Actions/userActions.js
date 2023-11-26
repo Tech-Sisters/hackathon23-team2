@@ -39,3 +39,37 @@ export const getAccessToken = (userData, idToken) => {
     }
   }
 }
+
+export const loginFirebaseUser = (idToken, firebaseUid) => {
+  return async (dispatch) => {
+    const options = {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${idToken}`
+      }
+    }
+    //   users?auth_id=EySA1GZ88PVLbKrgTuyD12quXUn1
+    try {
+      const response = await fetch(baseEndpoint + `/users?auth_id=${firebaseUid}`, options)
+      if (response.ok) {
+        const user = await response.json()
+        console.log("------user", user)
+
+        localStorage.setItem("accessToken", idToken)
+        // setting access token in the profile reducer
+        dispatch({
+          type: SET_ACCESS_TOKEN,
+          payload: idToken
+        })
+
+        return user
+      } else {
+        const errorResponse = await response.json()
+        console.log("error creating user", errorResponse.message)
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+}
