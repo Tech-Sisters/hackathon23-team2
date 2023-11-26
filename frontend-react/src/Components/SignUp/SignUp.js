@@ -31,16 +31,20 @@ const SignUp = () => {
       try {
         const userCredential = await createUserWithEmailAndPassword(auth, formData.email, formData.password)
 
-        const firebaseUid = userCredential.user.uid
-        const accessToken = userCredential.user.accessToken
-        console.log("------ User Credentials:", userCredential, firebaseUid, accessToken)
+        const firebaseUser = userCredential.user
+        const firebaseUid = firebaseUser.uid
+
+        // Retrieve the ID token
+        const idToken = await firebaseUser.getIdToken()
+
+        console.log("------ User Credentials:", userCredential, "Firebase UID:", firebaseUid, "ID Token:", idToken)
         const userData = {
           username: formData.username,
           email: formData.email,
           auth_id: firebaseUid
         }
         // const response = await axios.post(`${API_ENDPOINT}/users/signup`, userData)
-        getAccessToken(userData, accessToken)
+        getAccessToken(userData, idToken)
 
         console.log("getting access token in signup")
 
