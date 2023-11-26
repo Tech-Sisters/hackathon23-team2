@@ -2,74 +2,42 @@ import "./HomeScreen.css";
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 const HomeScreen = () => {
-  let navigate = useNavigate();
-  let location = useLocation();
-  let auth_id = location.state;
   const [filteredSurahs, setFilteredSurahs] = useState([]);
   const [selectedStrength, setSelectedStrength] = useState("All");
-  const [surahsList, setSurahsList] = useState([
-    {
-      id: 1,
-      surahName: "Almulk",
-      numberOfAyah: 30,
-      currentStrength: "Strong",
-      lastTestedOn: "14/11/2023",
-      ayahs: [
-        "ayahaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa1",
-        "ayah2",
-      ],
-    },
-    {
-      id: 2,
-      surahName: "Abassa",
-      numberOfAyah: 30,
-      currentStrength: "Weak",
-      lastTestedOn: "14/11/2023",
-      ayahs: [
-        "ayahaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa1",
-        "ayah2",
-        "ayah3",
-      ],
-    },
-    {
-      id: 3,
-      surahName: "Abassa",
-      numberOfAyah: 30,
-      currentStrength: "Weak",
-      lastTestedOn: "14/11/2023",
-      ayahs: [
-        "ayahaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa1",
-        "ayah2",
-        "ayah3",
-      ],
-    },
-    {
-      id: 4,
-      surahName: "Abassa",
-      numberOfAyah: 30,
-      currentStrength: "Weak",
-      lastTestedOn: "14/11/2023",
-      ayahs: [
-        "ayahaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa1",
-        "ayah2",
-        "ayah3",
-      ],
-    },
-  ]);
+  let navigate = useNavigate();
+  let location = useLocation();
+  let data = location.state;
+  const revisionSurahs = Object.entries(data.revisionSurahs).map(
+    ([_, value]) => value
+  );
+  const idMap = data.juzzAmma.reduce((acc, obj) => {
+    acc[obj.id] = obj;
+    return acc;
+  }, {});
+  const revisionSurahsObj = revisionSurahs.map((obj1) => ({
+    ...obj1,
+    ...idMap[obj1.id],
+  }));
+
+  const selectedStrengthSurahs = data.juzzAmma.filter(
+    (surah) => surah.surahTestHistory.initialStrength !== null
+  );
   useEffect(() => {
-    setFilteredSurahs(surahsList);
-  }, [surahsList]);
+    setFilteredSurahs(selectedStrengthSurahs);
+  }, []);
 
   const handleClickTestSurah = (surahId) => {
-    let selectedTest = surahsList.filter((s) => s.id === surahId);
+    let selectedTest = selectedStrengthSurahs.filter((s) => s.id === surahId);
     navigate("/begin-test", { state: selectedTest });
   };
   const handleFilterSurahStrength = (strength) => {
     if (strength === "All") {
-      setFilteredSurahs(surahsList);
+      setFilteredSurahs(selectedStrengthSurahs);
       setSelectedStrength("All");
     } else {
-      const filtered = surahsList.filter((s) => s.currentStrength === strength);
+      const filtered = selectedStrengthSurahs.filter(
+        (s) => s.surahTestHistory.currentStrength === strength
+      );
       setFilteredSurahs(filtered);
       setSelectedStrength(strength);
     }
@@ -84,7 +52,7 @@ const HomeScreen = () => {
                 <h3>Today's Practice</h3>
               </div>
             </div>
-            {surahsList.map((surah) => (
+            {revisionSurahsObj.map((surah) => (
               <div
                 className="row my-3 CategoryBorder WhiteBackground text p-3 d-flex justify-content-center"
                 onClick={() => handleClickTestSurah(surah.id)}
@@ -93,11 +61,11 @@ const HomeScreen = () => {
                 <div className="col-8">
                   <div className="row">
                     <div className="col-12 text">
-                      <h6 className="FontSize16">{surah.surahName}</h6>
+                      <h6 className="FontSize16">{surah.name}</h6>
                     </div>
                     <div className="col-12 text">
                       <h6 className="FontSize12">
-                        Ayah 1 - {surah.numberOfAyah}
+                        {/* Ayah 1 - {surah.numberOfAyah} */}
                       </h6>
                     </div>
                   </div>
@@ -105,7 +73,7 @@ const HomeScreen = () => {
                 <div className="col-4 d-flex justify-content-center">
                   <div className="align-self-center">
                     <div
-                      className={`${surah.currentStrength}Color strengthBadge rounded-pill m-2 text-center`}
+                      className={`${surah.surahTestHistory.initialStrength}Color strengthBadge rounded-pill m-2 text-center`}
                     >
                       Test
                     </div>
@@ -163,18 +131,18 @@ const HomeScreen = () => {
         <div className="row p-3 WhiteBackground">
           <div className="col-12">
             <div className="ScrollTable">
-              <table className="table ">
+              <table className="table">
                 <tbody>
-                  {filteredSurahs.map((surah, index) => (
-                    <tr key={index}>
+                  {filteredSurahs.map((surah) => (
+                    <tr key={surah.id}>
                       <td>
-                        <span className="surahName">{surah.surahName}</span>
+                        <span className="surahName">{surah.name}</span>
                       </td>
                       <td className="text-end">
                         <button
-                          className={`${surah.currentStrength}Color strengthBadge rounded-pill m-2`}
+                          className={`${surah.surahTestHistory.currentStrength}Color strengthBadge rounded-pill m-2`}
                         >
-                          {surah.currentStrength}
+                          {surah.surahTestHistory.currentStrength}
                         </button>
                       </td>
                     </tr>
