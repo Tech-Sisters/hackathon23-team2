@@ -21,13 +21,12 @@ const SurahController = {
       }
 
       if (juzzAmma === undefined || juzzAmma === null) {
-        return res.status(400).send({ message: "juzzAmma is required in the request body" });
+        return res.status(400).send({ message: "juzzAmma is required in the request body" })
       }
 
       // Update juzzAmma for the found user
       user.juzzAmma = juzzAmma
       await user.save()
-
     } catch (error) {
       next(error)
     }
@@ -119,7 +118,9 @@ const SurahController = {
   getAyat: async (req, res, next) => {
     const { surahId } = req.query
     try {
-      const response = await axios.get(`https://api.quran.com/api/v4/verses/by_chapter/${surahId}?fields=text_imlaei`)
+      const response = await axios.get(
+        `https://api.quran.com/api/v4/verses/by_chapter/${surahId}?fields=text_imlaei&per_page=50`
+      )
       const ayat = response.data.verses
 
       res.send(ayat)
