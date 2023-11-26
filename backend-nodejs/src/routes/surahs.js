@@ -7,10 +7,9 @@ import authenticateUser from "../middleware/authenticateUser.js"
 const surahRouter = express.Router()
 
 // initilise the surahs for the user
-surahRouter.post("/initialiseSurah", /*authenticateUser,*/ async (req, res, next) => {
+surahRouter.post("/initialiseSurah", authenticateUser, async (req, res, next) => {
   let allowFurtherActions = true;
   try {
-
     const { auth_id } = req.query;
     await surahController.initialiseSurah(req, res, () => {
       allowFurtherActions = false;
