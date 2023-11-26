@@ -17,6 +17,8 @@ pids
 
 # Optional - Express app specific
 .env
+backend-nodejs/serviceAccountKey.json
+
 
 # React build directories
 /build

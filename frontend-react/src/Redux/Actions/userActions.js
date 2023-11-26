@@ -18,6 +18,19 @@ const baseEndpoint = API_ENDPOINT
 //     }
 //   }
 //   console.log("options", options)
+//   try {
+//     return async (dispatch) => {
+//         console.log("---------inside the getAccessToken action----------")
+//         const response = await fetch(baseEndpoint + "/users/signup", options)
+//         if(){
+//             const tokens = await response.json()
+//         console.log("------tokens", tokens)
+//         const accessToken = await tokens.accessToken
+//         }
+//     }
+//   } catch (error) {
+//     console.log(error)
+//   }
 // }
 
 export const getAccessToken = (userData, idToken) => {

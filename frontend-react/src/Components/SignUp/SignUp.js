@@ -5,9 +5,11 @@ import { auth } from "../../firebase"
 import axios from "axios"
 import { API_ENDPOINT } from "../../config"
 import { getAccessToken } from "../../Redux/Actions/userActions"
+import { useDispatch } from "react-redux"
 
 const SignUp = () => {
   let navigate = useNavigate()
+  const dispatch = useDispatch()
   const [formData, setFormData] = useState({
     username: "",
     email: "",
@@ -44,7 +46,7 @@ const SignUp = () => {
           auth_id: firebaseUid
         }
         // const response = await axios.post(`${API_ENDPOINT}/users/signup`, userData)
-        getAccessToken(userData, idToken)
+        dispatch(getAccessToken(userData, idToken))
 
         console.log("getting access token in signup")
 
