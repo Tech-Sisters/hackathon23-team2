@@ -10,7 +10,6 @@ const surahRouter = express.Router()
 surahRouter.post("/initialiseSurah", /*authenticateUser,*/ async (req, res, next) => {
   let allowFurtherActions = true;
   try {
-
     const { auth_id } = req.query;
     await surahController.initialiseSurah(req, res, () => {
       allowFurtherActions = false;
@@ -45,10 +44,12 @@ surahRouter.put('/updateSurah', /*authenticateUser,*/async (req, res, next) => {
   try {
     const { auth_id } = req.query;
     await surahController.updateSurah(req, res, () => {
+      console.log("in stage 1")
       allowFurtherActions = false;
       next();
     });
     await currentRevisionController.updateCurrentRevision(req, res, () => {
+      console.log("in stage 2")
       allowFurtherActions = false;
       next();
     });
