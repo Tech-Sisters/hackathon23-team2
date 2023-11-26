@@ -49,11 +49,10 @@ const SignUp = () => {
 
         try {
           const savedUser = await dispatch(getAccessToken(userData, idToken))
-          console.log("user is here", savedUser)
 
           if (savedUser) {
             // Navigate only if savedUser is successfully returned
-            console.log("resetting signup")
+
             navigate("/all-surahs", { state: firebaseUid })
           }
         } catch (error) {
