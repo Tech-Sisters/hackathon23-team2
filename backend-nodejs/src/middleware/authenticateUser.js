@@ -2,7 +2,6 @@ import firebase from "../firebaseInit.cjs"
 
 const authenticateUser = (req, res, next) => {
   const idToken = req.headers.authorization
-  console.log("id token", idToken)
 
   if (!idToken) {
     return res.status(401).send({ message: "No token provided" })

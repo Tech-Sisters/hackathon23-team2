@@ -40,30 +40,26 @@ const SignUp = () => {
         const idToken = await firebaseUser.getIdToken()
 
         console.log("------ User Credentials:", userCredential, "Firebase UID:", firebaseUid, "ID Token:", idToken)
+
         const userData = {
           username: formData.username,
           email: formData.email,
           auth_id: firebaseUid
         }
-        // const response = await axios.post(`${API_ENDPOINT}/users/signup`, userData)
-        dispatch(getAccessToken(userData, idToken))
 
-        console.log("getting access token in signup")
+        try {
+          const savedUser = await dispatch(getAccessToken(userData, idToken))
+          console.log("user is here", savedUser)
 
-        setFormData((prevState) => ({
-          username: userData.username,
-          email: formData.email,
-          auth_id: firebaseUid
-        }))
-
-        console.log("resetting signup")
-        navigate("/all-surahs", { state: firebaseUid })
-        // console.log("-----response", response)
-        // if (response.ok) {
-        //   navigate("/all-surahs", { state: firebaseUid })
-        // } else {
-        //   console.error("-----error")
-        // }
+          if (savedUser) {
+            // Navigate only if savedUser is successfully returned
+            console.log("resetting signup")
+            navigate("/all-surahs", { state: firebaseUid })
+          }
+        } catch (error) {
+          console.error("Error in getting access token:", error)
+          alert("username already exists")
+        }
       } catch (error) {
         console.error("Error signing up:", error)
       }
