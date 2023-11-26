@@ -1,4 +1,4 @@
-import { SET_ACCESS_TOKEN, LOGIN_USER_STATUS } from "../Actions/userActions"
+import { SET_ACCESS_TOKEN, LOGIN_USER_STATUS, REMOVE_ACCESS_TOKEN } from "../Actions/userActions"
 
 const initialState = {
   accessToken: null,
@@ -15,6 +15,11 @@ const profileReducer = (state = initialState, action) => {
       return {
         ...state,
         loginStatus: action.payload
+      }
+    case REMOVE_ACCESS_TOKEN:
+      return {
+        ...state,
+        accessToken: null
       }
 
     default:

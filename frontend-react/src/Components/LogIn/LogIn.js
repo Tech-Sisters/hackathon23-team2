@@ -36,17 +36,6 @@ const LogIn = () => {
       console.error("Error in getting access token:", error)
       alert("error with login")
     }
-    // signInWithEmailAndPassword(auth, formData.email, formData.password)
-    //   .then((userCredential) => {
-    //     const user = userCredential.user
-    //     console.log(user)
-    //     navigate("/home-screen", { state: formData.password })
-    //   })
-    //   .catch((error) => {
-    //     const errorCode = error.code
-    //     const errorMessage = error.message
-    //     console.log(errorCode, errorMessage)
-    //   })
   }
 
   return (

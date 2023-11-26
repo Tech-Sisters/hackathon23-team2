@@ -2,6 +2,7 @@ import { API_ENDPOINT } from "../../config"
 
 export const SET_ACCESS_TOKEN = "SET_ACCESS_TOKEN"
 export const LOGIN_USER_STATUS = "LOGIN_USER_STATUS"
+export const REMOVE_ACCESS_TOKEN = "REMOVE_ACCESS_TOKEN"
 
 const baseEndpoint = API_ENDPOINT
 
@@ -20,9 +21,9 @@ export const getAccessToken = (userData, idToken) => {
       const response = await fetch(baseEndpoint + "/users/signup", options)
       if (response.ok) {
         const savedUser = await response.json()
-        console.log("------savedUser", savedUser)
 
         localStorage.setItem("accessToken", idToken)
+        console.log("setting new access token")
         // setting access token in the profile reducer
         dispatch({
           type: SET_ACCESS_TOKEN,
@@ -54,9 +55,9 @@ export const loginFirebaseUser = (idToken, firebaseUid) => {
       const response = await fetch(baseEndpoint + `/users?auth_id=${firebaseUid}`, options)
       if (response.ok) {
         const user = await response.json()
-        console.log("------user", user)
 
         localStorage.setItem("accessToken", idToken)
+        console.log("setting new access token")
         // setting access token in the profile reducer
         dispatch({
           type: SET_ACCESS_TOKEN,
@@ -70,6 +71,20 @@ export const loginFirebaseUser = (idToken, firebaseUid) => {
       }
     } catch (error) {
       console.log(error)
+    }
+  }
+}
+
+export const removeAccessToken = () => {
+  return async (dispatch) => {
+    try {
+      // Remove the access token from local storage
+      localStorage.removeItem("accessToken")
+      dispatch({
+        type: REMOVE_ACCESS_TOKEN
+      })
+    } catch (error) {
+      console.log("error removing access tokens")
     }
   }
 }
