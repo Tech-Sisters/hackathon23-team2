@@ -76,7 +76,7 @@ const HomeScreen = () => {
   const handleClickTestSurah = (surahId, surahIndex) => {
     let selectedTest = selectedStrengthSurahs.filter((s) => s.id === surahId);
     console.log(auth_id);
-    navigate("/begin-test", { state: { selectedTest, auth_id, surahIndex } });
+    navigate("/begin-test", { state: { surahId, auth_id, surahIndex } });
   };
   const handleFilterSurahStrength = (strength) => {
     if (strength === "All") {

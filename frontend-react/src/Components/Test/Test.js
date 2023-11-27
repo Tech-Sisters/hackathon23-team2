@@ -9,7 +9,7 @@ import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
 const Test = () => {
   let navigate = useNavigate();
   const location = useLocation();
-  const { surah, auth_id, surahIndex } = location.state;
+  const { surahId, auth_id, surahIndex } = location.state;
   const [ayahIndex, setAyaIndex] = useState(0);
   const [hideAyah, setHideAyah] = useState(true);
   const [completeAyah, setCompleteAyah] = useState(false);
@@ -17,11 +17,18 @@ const Test = () => {
   const [ayahCounterFlag, setAyahCounterFlag] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
   const [ayahs, setAyahs] = useState([]);
+  const [surah, setSurah] = useState({});
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `${API_ENDPOINT}/surahs/ayat?surahId=${surah.id}`
+          `${API_ENDPOINT}/surahs/ayat?surahId=${surahId}`
+        );
+        const surahResponse = await axios.get(
+          `${API_ENDPOINT}/users?auth_id=${auth_id}`
+        );
+        setSurah(
+          surahResponse.data.juzzAmma.filter((surah) => surah.id === surahId)[0]
         );
         setAyahs(response.data);
         setIsLoading(false);
@@ -46,7 +53,7 @@ const Test = () => {
     } else {
       navigate("/end-test", {
         state: {
-          surah,
+          surahId,
           ayahHelpCounter,
           auth_id,
           surahIndex,

@@ -3,24 +3,29 @@ import { useNavigate, useLocation } from "react-router-dom";
 import "./Test.css";
 import ExitTest from "../ExitTest/ExitTest";
 import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
-
+import axios from "axios";
+import { API_ENDPOINT } from "../../config";
 const BeginTest = () => {
   const [surah, setSurah] = useState({});
   const [isLoading, setIsLoading] = useState(true);
   let navigate = useNavigate();
   const location = useLocation();
-  let { selectedTest, auth_id, surahIndex } = location.state;
+  let { surahId, auth_id, surahIndex } = location.state;
   useEffect(() => {
-    try {
-      setSurah(selectedTest[0]);
-      setIsLoading(false);
-    } catch (error) {
-      setIsLoading(false);
-    }
-  }, [surah]);
+    const fetchData = async () => {
+      try {
+        const res = await axios.get(`${API_ENDPOINT}/users?auth_id=${auth_id}`);
+        setSurah(res.data.juzzAmma.filter((surah) => surah.id === surahId)[0]);
+        setIsLoading(false);
+      } catch (error) {
+        setIsLoading(false);
+      }
+    };
+    fetchData();
+  }, []);
 
   const onBeginTestHandle = () => {
-    navigate("/test", { state: { surah, auth_id, surahIndex } });
+    navigate("/test", { state: { surahId, auth_id, surahIndex } });
   };
   return (
     <>

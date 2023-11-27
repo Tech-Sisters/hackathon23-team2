@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import "./FinalRankingTest.css";
 import { BsArrowRightCircle } from "react-icons/bs";
@@ -10,8 +10,21 @@ const FinalRankingTest = () => {
   const [selectedStrength, setSelectedStrength] = useState("");
   const [nextIconVisible, setNextIconVisible] = useState(false);
   const [showConfirmationPage, setShowConfirmationPage] = useState(false);
+  const [surah, setSurah] = useState({});
   const location = useLocation();
-  const { surah, ayahHelpCounter, auth_id, surahIndex } = location.state;
+  const { surahId, ayahHelpCounter, auth_id, surahIndex } = location.state;
+  useEffect(() => {
+    const fetchData = async () => {
+      const surahResponse = await axios.get(
+        `${API_ENDPOINT}/users?auth_id=${auth_id}`
+      );
+      setSurah(
+        surahResponse.data.juzzAmma.filter((surah) => surah.id === surahId)[0]
+      );
+    };
+    fetchData();
+  }, []);
+
   const handleSelectedStrength = (strength) => {
     setSelectedStrength(strength);
     setNextIconVisible(true);
@@ -19,7 +32,7 @@ const FinalRankingTest = () => {
   const handleNextButtonClick = async () => {
     let surahIndexParam = surahIndex === 0 ? "first_surah" : "second_surah";
     const res = await axios.put(
-      `${API_ENDPOINT}/surahs/updateSurah?auth_id=${auth_id}&surahId=${surah.id}&revisedSurah=${surahIndexParam}`,
+      `${API_ENDPOINT}/surahs/updateSurah?auth_id=${auth_id}&surahId=${surahId}&revisedSurah=${surahIndexParam}`,
       {
         strength: selectedStrength,
       }
@@ -27,7 +40,8 @@ const FinalRankingTest = () => {
     setShowConfirmationPage(true);
   };
   const handleSurahHistoryNavigate = () => {
-    navigate("/surah-history", { state: surah.id });
+    let surahId = surah.id;
+    navigate("/surah-history", { state: { surahId, auth_id } });
   };
   return (
     <>

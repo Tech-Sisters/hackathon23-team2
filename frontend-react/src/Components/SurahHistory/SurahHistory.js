@@ -22,7 +22,7 @@ const SurahHistory = () => {
     ],
   };
   const handleTestSurah = () => {
-    // navigate("/begin-test", { state: { id: surahId } });
+    navigate("/begin-test", { state: { surahId, auth_id } });
   };
   return (
     <>
