@@ -29,6 +29,7 @@
     <li><a href="#audience">The Audience</a></li>
     <li><a href="#solution">The Solution</a></li>
     <li><a href="#prototype">The Prototype</a></li>
+    <li><a href="#usage">Usage</a></li>
   
 </ul>
   </div>
@@ -41,6 +42,8 @@
   <p>
     A product that will be of benefit to the muslim community, focusing on Qur'an memorisation and a female audience.
   <p>
+  <br/>
+  <br/>
       <h2 id="audience">
     Why a female audience?
   </h2>
@@ -50,7 +53,7 @@
     <br/>
    Furthermore, women, particularly those with household or childcare responsibilities, might find it challenging to attend regular Quran study classes. An app allows them to learn and practice at their own pace and in the comfort of their homes. The community element of the application can keeps such women motivated and allows them to feel the same support and encouragement from attending live classes.
   <p>
-     <br/>
+  <br/>
   <br/>
   <h2 id="solution">
     The Solution
@@ -76,8 +79,8 @@
       <li>The user shall have be part of a community of like-minded Muslim women who are actively engaging in strengthening their memorisation.</li>
     </ul>
   <p>
-    <br/>
-     <br/>
+  <br/>
+  <br/>
 
   <h2 id="prototype">
     The Prototype
@@ -108,8 +111,12 @@ React was implemented on the frontend for it's ability to create reusable compon
 <br/>
 <img src="/assets/architecture-diagram.png" alt="architecture diagram">
 </div>
+<br/>
+<br/>
 
-## 🏁 Get up and running:
+<h2 id="usage">
+  🏁 Get up and running:
+</h2> 
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
 
