@@ -2,34 +2,57 @@ import "./HomeScreen.css";
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
+import axios from "axios";
+import { API_ENDPOINT } from "../../config";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "../../firebase";
 const HomeScreen = () => {
   const [filteredSurahs, setFilteredSurahs] = useState([]);
+  const [selectedStrengthSurahs, setSelectedStrengthSurahs] = useState([]);
   const [selectedStrength, setSelectedStrength] = useState("All");
   const [numberOfAyahs, setNumberOfAyahs] = useState([]);
   const [revisionSurahs, setRevisionSurahs] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [userData, setUserData] = useState({});
+  const [auth_id, setAuthId] = useState(null);
   let navigate = useNavigate();
-  let location = useLocation();
-  let { data, auth_id } = location.state;
-  const selectedStrengthSurahs = data.juzzAmma.filter(
-    (surah) => surah.surahTestHistory.initialStrength !== null
-  );
-  const revisionSurahsIDs = Object.entries(data.revisionSurahs).map(
-    ([_, value]) => value.id
-  );
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchData = async (auth_id) => {
       try {
-        setRevisionSurahs(
-          data.juzzAmma.filter((surah) => revisionSurahsIDs.includes(surah.id))
+        const response = await axios.get(
+          `${API_ENDPOINT}/users?auth_id=${auth_id}`
         );
-        setFilteredSurahs(selectedStrengthSurahs);
+        setAuthId(auth_id);
+        setUserData(response.data);
+        setSelectedStrengthSurahs(
+          response.data.juzzAmma.filter(
+            (surah) => surah.surahTestHistory.initialStrength !== null
+          )
+        );
+        setFilteredSurahs(
+          response.data.juzzAmma.filter(
+            (surah) => surah.surahTestHistory.initialStrength !== null
+          )
+        );
+        const revisionSurahsIDs = Object.entries(
+          response.data.revisionSurahs
+        ).map(([_, value]) => value.id);
+        setRevisionSurahs(
+          response.data.juzzAmma.filter((surah) =>
+            revisionSurahsIDs.includes(surah.id)
+          )
+        );
+
         setIsLoading(false);
       } catch (error) {
         setIsLoading(false);
       }
     };
-    fetchData();
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        fetchData(user.uid);
+      }
+    });
   }, []);
 
   // const surahsID = selectedStrengthSurahs.map((obj) => obj.id);
@@ -52,6 +75,7 @@ const HomeScreen = () => {
 
   const handleClickTestSurah = (surahId, surahIndex) => {
     let selectedTest = selectedStrengthSurahs.filter((s) => s.id === surahId);
+    console.log(auth_id);
     navigate("/begin-test", { state: { selectedTest, auth_id, surahIndex } });
   };
   const handleFilterSurahStrength = (strength) => {
@@ -72,7 +96,13 @@ const HomeScreen = () => {
   return (
     <>
       {isLoading ? (
-        <LoadingSpinner />
+        <div className="container-fluid">
+          <div className="row justify-content-center p-3">
+            <div className="col-3">
+              <LoadingSpinner />
+            </div>
+          </div>
+        </div>
       ) : (
         <div className="container-fluid header">
           <div className="row p-3">

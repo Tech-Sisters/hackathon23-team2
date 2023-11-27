@@ -50,7 +50,7 @@ const AllSurahs = () => {
         juzzAmma: juzzamma,
       }
     );
-    navigate("/home-screen", { state: { data: res.data, auth_id } });
+    navigate("/home-screen", { state: { auth_id } });
   };
   return (
     <>
