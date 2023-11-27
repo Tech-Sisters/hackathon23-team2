@@ -7,7 +7,8 @@ import {
   loginFirebaseUser,
 } from "../../Redux/Actions/userActions";
 import { useDispatch } from "react-redux";
-
+import { API_ENDPOINT } from "../../config";
+import axios from "axios";
 const LogIn = () => {
   const dispatch = useDispatch();
   let navigate = useNavigate();
@@ -37,8 +38,15 @@ const LogIn = () => {
 
       if (foundUser) {
         // Navigate only if foundUser is successfully returned
-
-        navigate("/home-screen", { state: formData.password });
+        const response = await axios.get(
+          `${API_ENDPOINT}/users?auth_id=${firebaseUid}`
+        );
+        if (response.data.revisionSurahs.length === 0) {
+          navigate("/all-surahs", { state: firebaseUid });
+        } else {
+          navigate("/home-screen", { state: { firebaseUid } });
+        }
+        //  navigate("/home-screen", { state: formData.password });
       }
     } catch (error) {
       console.error("Error in getting access token:", error);

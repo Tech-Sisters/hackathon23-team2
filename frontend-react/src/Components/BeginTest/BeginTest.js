@@ -5,6 +5,7 @@ import ExitTest from "../ExitTest/ExitTest";
 import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
 import axios from "axios";
 import { API_ENDPOINT } from "../../config";
+import moment from "moment";
 const BeginTest = () => {
   const [surah, setSurah] = useState({});
   const [isLoading, setIsLoading] = useState(true);
@@ -54,12 +55,14 @@ const BeginTest = () => {
                   <span
                     className={`badge rounded-pill p-2 ${surah.surahTestHistory.initialStrength}Color`}
                   >
-                    {surah.surahTestHistory.initialStrength}
+                    {surah.surahTestHistory.currentStrength}
                   </span>
                   <h6 className="text p-2">Last Tested On:</h6>
                   <h6 className="fw-normal text ">
-                    {surah.surahTestHistory.revisions[0]
-                      ? surah.surahTestHistory.revisions[0]
+                    {surah.surahTestHistory.revisions[0].date
+                      ? moment(surah.surahTestHistory.revisions[0].date).format(
+                          "DD/MM/YYYY"
+                        )
                       : "No Date"}
                   </h6>
                 </div>

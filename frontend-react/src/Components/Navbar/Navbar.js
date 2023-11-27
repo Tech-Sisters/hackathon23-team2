@@ -62,15 +62,6 @@ const Navbar = () => {
                 <a
                   className="text nav-link fw-bold FontSize12"
                   style={{ color: "#FFFFFF" }}
-                  href="/surah-history"
-                >
-                  Revision History
-                </a>
-              </li>
-              <li className="nav-item">
-                <a
-                  className="text nav-link fw-bold FontSize12"
-                  style={{ color: "#FFFFFF" }}
                   href="/profile"
                 >
                   My Profile

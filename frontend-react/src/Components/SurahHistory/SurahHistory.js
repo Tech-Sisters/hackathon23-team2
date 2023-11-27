@@ -1,9 +1,14 @@
 import { BsArrowRight } from "react-icons/bs";
 import { useNavigate, useLocation } from "react-router-dom";
+import { useEffect } from "react";
+import axios from "axios";
+import { API_ENDPOINT } from "../../config";
+
 const SurahHistory = () => {
   let navigate = useNavigate();
   let location = useLocation();
   let { surahId, auth_id } = location.state;
+
   const surahHistory = {
     surahName: "AlMulk",
     surahHistory: [
@@ -21,6 +26,18 @@ const SurahHistory = () => {
       },
     ],
   };
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     const surahResponse = await axios.get(
+  //       `${API_ENDPOINT}/users?auth_id=${auth_id}`
+  //     );
+  //     setSurah(
+  //       surahResponse.data.juzzAmma.filter((surah) => surah.id === surahId)[0]
+  //     );
+  //   };
+  //   fetchData();
+  // }, []);
+
   const handleTestSurah = () => {
     navigate("/begin-test", { state: { surahId, auth_id } });
   };
