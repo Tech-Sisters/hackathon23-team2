@@ -32,8 +32,14 @@
     🧐 The Solution
   </h2>
   <p>
-  An application where users can:
-    <ul>
+  We wanted to create an application that helped users to track their Qur'an memorisation, and provided insights to their 
+  progress. This application is needed so that users can take accountability 
+  for their memorisation and view their weak points. 
+  <br/>
+  It was important for the UI to be smooth and easy to use, and for users to be prompted to test their weaker surahs.
+  <br/>
+  Bearing in mind our criteria, we defined the following features:
+      <ul>
       <li>Complete daily tests with a focus on their weaker Surahs.</li>
       <li>Take initiative and engage in their own self-initialised tests.</li>
       <li>Get personalised reports and insights of their Qur'an hustory.</li>
@@ -45,11 +51,18 @@
   </h2>
   <p>
   The prototype has been built and designed as a mobile-first fullstack web application, as this would make the transition to a mobile app much smoother.
-We have defined and implemented the core funtionality:
- insert diagram off app flow
+<br/>
+The below diagram provides an overview of the architectural design for our prototype. 
+We made the decision to use Firebase for efficient user authentication, and React on the frontend for it's ability to create reusable components which make up much of the UI.
+<img src="/assets/architecture-diagram.png" alt="architecture diagram">
+
+The following diagram illustrates the borader app flow:
+<img src="/assets/app-flow-complete.png" alt="app flow complicated">
+
+From this flow, we simplified and implemented the core functionality which is illustrated by this simplified diagram:
+<img src="/assets/app-flow.png" alt="app flow">
+
 </div>
-
-
 
 # Instruction to the team:
 
