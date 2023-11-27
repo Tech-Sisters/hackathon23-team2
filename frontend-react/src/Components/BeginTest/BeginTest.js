@@ -14,6 +14,10 @@ const BeginTest = () => {
   let { surahId, auth_id, surahIndex, updateStrengthOnly } = location.state || {};
   useEffect(() => {
     const fetchData = async () => {
+      const token = localStorage.getItem('accessToken');
+      if (token) {
+        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+      }
       try {
         const res = await axios.get(`${API_ENDPOINT}/users?auth_id=${auth_id}`);
         setSurah(res.data.juzzAmma.filter((surah) => surah.id === surahId)[0]);
