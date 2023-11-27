@@ -37,6 +37,20 @@ surahRouter.post("/initialiseSurah", /*authenticateUser,*/ async (req, res, next
 // get the surahTestHistory for a specific surah
 surahRouter.get("/surahHistory", /*authenticateUser,*/ surahController.getSurahHistory);
 
+// update strength only
+surahRouter.put('/updateSurahStrengthOnly', /*authenticateUser,*/ async (req, res, next) => {
+  try {
+    const { auth_id } = req.query
+    await surahController.updateSurah(req, res, () => {
+      next();
+    });
+    const updatedUser = await UsersModel.findOne({ auth_id })
+    res.status(200).send(updatedUser);
+
+  } catch (err) {
+    next(err)
+  }
+})
 
 // update strenght of the surah, currentRevision and revisionSurahs
 surahRouter.put('/updateSurah', /*authenticateUser,*/async (req, res, next) => {
@@ -44,12 +58,10 @@ surahRouter.put('/updateSurah', /*authenticateUser,*/async (req, res, next) => {
   try {
     const { auth_id } = req.query;
     await surahController.updateSurah(req, res, () => {
-      console.log("in stage 1")
       allowFurtherActions = false;
       next();
     });
     await currentRevisionController.updateCurrentRevision(req, res, () => {
-      console.log("in stage 2")
       allowFurtherActions = false;
       next();
     });
