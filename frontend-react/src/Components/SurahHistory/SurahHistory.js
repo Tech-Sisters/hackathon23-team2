@@ -3,8 +3,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 const SurahHistory = () => {
   let navigate = useNavigate();
   let location = useLocation();
-  let surahId = location.state;
-  console.log(location);
+  let { surahId, auth_id } = location.state;
   const surahHistory = {
     surahName: "AlMulk",
     surahHistory: [

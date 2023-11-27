@@ -66,6 +66,9 @@ const HomeScreen = () => {
       setSelectedStrength(strength);
     }
   };
+  const handleNavigateSurahHistory = (surahId) => {
+    navigate("/surah-history", { state: { surahId, auth_id } });
+  };
   return (
     <>
       {isLoading ? (
@@ -161,7 +164,10 @@ const HomeScreen = () => {
                 <table className="table">
                   <tbody>
                     {filteredSurahs.map((surah) => (
-                      <tr key={surah.id}>
+                      <tr
+                        key={surah.id}
+                        onClick={() => handleNavigateSurahHistory(surah.id)}
+                      >
                         <td>
                           <span className="surahName">{surah.name}</span>
                         </td>
