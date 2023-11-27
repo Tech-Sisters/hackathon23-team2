@@ -17,7 +17,7 @@ const SurahHistory = () => {
     const fetchData = async () => {
       try {
         console.log("in try block")
-        const response = await axios.get(`http://localhost:3000/surahs/surahHistory?auth_id=111111111&surahId=`);
+        const response = await axios.get(`http://localhost:3000/surahs/surahHistory?auth_id=123321&surahId=78`);
         //const response = await axios.get(`${API_ENDPOINT}/surahs/surahHistory/${auth_id}/${surahId}`);
         setSurahHistory(response.data);
         console.log(response.data)
@@ -77,8 +77,13 @@ const SurahHistory = () => {
                 <h3>Revision History</h3>
               </div>
             </div>
-            {surahHistory.surahTestHistory.revisions.map((revision, index) => {
+            {surahHistory.surahTestHistory.revisions.map((revision, index, revisions) => {
               const formattedDate = new Date(revision.date).toLocaleDateString('en-GB');
+              let previousStrength = '';
+
+              if (index < revisions.length - 1) {
+                previousStrength = revisions[index + 1].strength;
+              }
               return (
                 <div key={index} className="row align-items-center px-3">
                   <div className="col-12">
@@ -86,9 +91,9 @@ const SurahHistory = () => {
                   </div>
                   <div className="col-12 d-flex align-items-center justify-content-between">
                     <button
-                      className={`${revision.strength}Color strengthButton rounded-pill`}
+                      className={`${previousStrength}Color strengthButton rounded-pill`}
                     >
-                      {revision.strength}
+                      {previousStrength}
                     </button>
                     <BsArrowRight />
                     <button
@@ -96,6 +101,7 @@ const SurahHistory = () => {
                     >
                       {revision.strength}
                     </button>
+
                   </div>
                   <div className="col-12">
                     <hr className="border border-dark border-top-2 opacity-25 w-100" />
