@@ -9,7 +9,7 @@ import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
 const Test = () => {
   let navigate = useNavigate();
   const location = useLocation();
-  const { surahId, auth_id, surahIndex } = location.state;
+  const { surahId, auth_id, surahIndex, updateStrengthOnly } = location.state;
   const [ayahIndex, setAyaIndex] = useState(0);
   const [hideAyah, setHideAyah] = useState(true);
   const [completeAyah, setCompleteAyah] = useState(false);
@@ -57,6 +57,7 @@ const Test = () => {
           ayahHelpCounter,
           auth_id,
           surahIndex,
+          updateStrengthOnly
         },
       });
     }
@@ -92,9 +93,8 @@ const Test = () => {
               <div className="row my-3 justify-content-center">
                 <div className="col-10 d-flex justify-content-center">
                   <h6
-                    className={`fw-normal text text-wrap text-break text-end ${
-                      hideAyah ? "hidden" : "visible"
-                    } `}
+                    className={`fw-normal text text-wrap text-break text-end ${hideAyah ? "hidden" : "visible"
+                      } `}
                   >
                     {ayahs[ayahIndex].text_imlaei}
                   </h6>
