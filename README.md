@@ -19,12 +19,11 @@
       <a href="https://github.com/hiboibrahim">Hibo Ibrahim</a> 
     </p>
 </div>
-  <br/>
-  <br/>
+ 
   <div>
-    <strong>
-      Contents
-    </strong>
+   <h1>
+     Contents
+   </h1>
 <ul>
  <li><a href="#idea">The Idea</a></li>
     <li><a href="#audience">The Audience</a></li>
