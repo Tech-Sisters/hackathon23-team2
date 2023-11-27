@@ -7,7 +7,8 @@ const SurahHistory = () => {
   let navigate = useNavigate();
   let location = useLocation();
   let auth_id = location.state;
-  let surahId = location.state;
+  let surahId = 78
+  //let surahId = location.state;
   const [surahHistory, setSurahHistory] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -31,25 +32,9 @@ const SurahHistory = () => {
     fetchData();
   }, []);
 
-  /*const surahHistory = {
-    surahName: "AlMulk",
-    surahHistory: [
-      {
-        date: "23/10/2023",
-        strength: "Weak",
-      },
-      {
-        date: "24/10/2023",
-        strength: "Medium",
-      },
-      {
-        date: "25/10/2023",
-        strength: "Strong",
-      },
-    ],
-  };*/
+
   const handleTestSurah = () => {
-    // navigate("/begin-test", { state: { id: surahId } });
+    navigate("/begin-test", { state: { id: surahId, updateStrengthOnly: true } });
   };
   return (
     <>
