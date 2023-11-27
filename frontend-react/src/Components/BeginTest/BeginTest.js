@@ -9,9 +9,10 @@ const BeginTest = () => {
   const [isLoading, setIsLoading] = useState(true);
   let navigate = useNavigate();
   const location = useLocation();
+  let { selectedTest, auth_id, surahIndex } = location.state;
   useEffect(() => {
     try {
-      setSurah(location.state[0]);
+      setSurah(selectedTest[0]);
       setIsLoading(false);
     } catch (error) {
       setIsLoading(false);
@@ -19,7 +20,7 @@ const BeginTest = () => {
   }, [surah]);
 
   const onBeginTestHandle = () => {
-    navigate("/test", { state: surah });
+    navigate("/test", { state: { surah, auth_id, surahIndex } });
   };
   return (
     <>

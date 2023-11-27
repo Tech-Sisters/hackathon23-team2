@@ -7,7 +7,7 @@ const ExitTest = () => {
   const [showModal, setShowModal] = useState(false);
 
   const handleConfirmExitTest = () => {
-    navigate("/");
+    navigate("/home-screen");
   };
 
   return (
