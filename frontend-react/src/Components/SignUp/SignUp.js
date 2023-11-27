@@ -4,9 +4,12 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../firebase";
 import axios from "axios";
 import { API_ENDPOINT } from "../../config";
+import { getAccessToken } from "../../Redux/Actions/userActions";
+import { useDispatch } from "react-redux";
 
 const SignUp = () => {
   let navigate = useNavigate();
+  const dispatch = useDispatch();
   const [formData, setFormData] = useState({
     username: "",
     email: "",
@@ -33,20 +36,40 @@ const SignUp = () => {
           formData.email,
           formData.password
         );
+
+        const firebaseUser = userCredential.user;
+        const firebaseUid = firebaseUser.uid;
+
+        // Retrieve the ID token
+        const idToken = await firebaseUser.getIdToken();
+
+        console.log(
+          "------ User Credentials:",
+          userCredential,
+          "Firebase UID:",
+          firebaseUid,
+          "ID Token:",
+          idToken
+        );
+
         const userData = {
           username: formData.username,
           email: formData.email,
-          auth_id: userCredential.user.uid,
+          auth_id: firebaseUid,
         };
-        const response = await axios.post(
-          `${API_ENDPOINT}/users/signup`,
-          userData
-        );
-        setFormData((prevState) => ({
-          username: userData.username,
-          email: formData.email,
-        }));
-        navigate("/all-surahs", { state: userData.auth_id });
+
+        try {
+          const savedUser = await dispatch(getAccessToken(userData, idToken));
+
+          if (savedUser) {
+            // Navigate only if savedUser is successfully returned
+
+            navigate("/all-surahs", { state: firebaseUid });
+          }
+        } catch (error) {
+          console.error("Error in getting access token:", error);
+          alert("username already exists");
+        }
       } catch (error) {
         console.error("Error signing up:", error);
       }

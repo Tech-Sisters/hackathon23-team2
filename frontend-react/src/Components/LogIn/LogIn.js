@@ -1,51 +1,49 @@
 import { Link, useNavigate } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../firebase";
-import axios from "axios";
-import { API_ENDPOINT } from "../../config";
+import {
+  getAccessToken,
+  loginFirebaseUser,
+} from "../../Redux/Actions/userActions";
+import { useDispatch } from "react-redux";
+
 const LogIn = () => {
+  const dispatch = useDispatch();
   let navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
   const [userLoggedIn, setUserLoggedIn] = useState(false);
-  // useEffect(() => {
-  //   const fetchData = async (auth_id) => {
-  //     const response = await axios.get(
-  //       `${API_ENDPOINT}/users?auth_id=${auth_id}`
-  //     );
-  //     console.log(response.data);
-  //     // if (response.data.)
-  //   };
-  //   fetchData();
-  // }, []);
-
   const handleInputChange = (e) => {
     const { id, value } = e.target;
     setFormData({ ...formData, [id]: value });
   };
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    let auth_id = "";
-    signInWithEmailAndPassword(auth, formData.email, formData.password)
-      .then(async (userCredential) => {
-        auth_id = userCredential.user.uid;
-        const response = await axios.get(
-          `${API_ENDPOINT}/users?auth_id=${auth_id}`
-        );
-        if (response.data.revisionSurahs.length === 0) {
-          navigate("/all-surahs", { state: auth_id });
-        } else {
-          navigate("/home-screen", { state: { auth_id } });
-        }
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        console.log(errorCode, errorMessage);
-      });
+    const userCredentials = await signInWithEmailAndPassword(
+      auth,
+      formData.email,
+      formData.password
+    );
+
+    const firebaseUser = userCredentials.user;
+    const firebaseUid = firebaseUser.uid;
+    const idToken = await firebaseUser.getIdToken();
+
+    try {
+      const foundUser = await dispatch(loginFirebaseUser(idToken, firebaseUid));
+
+      if (foundUser) {
+        // Navigate only if foundUser is successfully returned
+
+        navigate("/home-screen", { state: formData.password });
+      }
+    } catch (error) {
+      console.error("Error in getting access token:", error);
+      alert("error with login");
+    }
   };
 
   return (

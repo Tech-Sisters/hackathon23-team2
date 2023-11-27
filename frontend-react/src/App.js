@@ -1,16 +1,16 @@
-import "./App.css"
-import { BrowserRouter, Routes, Route, Link, Navigate } from "react-router-dom"
-import AllSurahs from "./Components/AllSurahs/AllSurahs"
-import BeginTest from "./Components/BeginTest/BeginTest"
-import Test from "./Components/Test/Test"
-import HomeScreen from "./Components/HomeScreen/HomeScreen"
-import FinalRankingTest from "./Components/FinalRankingTest/FinalRankingTest"
-import SignUp from "./Components/SignUp/SignUp"
-import LogIn from "./Components/LogIn/LogIn"
-import SurahHistory from "./Components/SurahHistory/SurahHistory"
-import Profile from "./Components/Profile/Profile"
-import Navbar from "./Components/Navbar/Navbar"
-import { auth } from "./firebase"
+import "./App.css";
+import { BrowserRouter, Routes, Route, Link, Navigate } from "react-router-dom";
+import AllSurahs from "./Components/AllSurahs/AllSurahs";
+import BeginTest from "./Components/BeginTest/BeginTest";
+import Test from "./Components/Test/Test";
+import HomeScreen from "./Components/HomeScreen/HomeScreen";
+import FinalRankingTest from "./Components/FinalRankingTest/FinalRankingTest";
+import SignUp from "./Components/SignUp/SignUp";
+import LogIn from "./Components/LogIn/LogIn";
+import SurahHistory from "./Components/SurahHistory/SurahHistory";
+import Profile from "./Components/Profile/Profile";
+import Navbar from "./Components/Navbar/Navbar";
+import { auth } from "./firebase";
 function App() {
   return (
     <>
@@ -30,7 +30,7 @@ function App() {
         </Routes>
       </BrowserRouter>
     </>
-  )
+  );
 }
 
-export default App
+export default App;

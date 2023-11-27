@@ -62,8 +62,8 @@ const CurrentRevisionController = {
     try {
       const { auth_id, revisedSurah } = req.query
 
-      if (!auth_id) {
-        return res.status(400).send({ message: "auth_id is required as a query parameter" })
+      if (!auth_id, !revisedSurah) {
+        return res.status(400).send({ message: "auth_id and revisedSurah are required as a query parameter" })
       }
 
       const user = await UsersModel.findOne({ auth_id })
