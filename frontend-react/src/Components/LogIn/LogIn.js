@@ -1,22 +1,45 @@
 import { Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../firebase";
+import axios from "axios";
+import { API_ENDPOINT } from "../../config";
 const LogIn = () => {
   let navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
+  const [userLoggedIn, setUserLoggedIn] = useState(false);
+  // useEffect(() => {
+  //   const fetchData = async (auth_id) => {
+  //     const response = await axios.get(
+  //       `${API_ENDPOINT}/users?auth_id=${auth_id}`
+  //     );
+  //     console.log(response.data);
+  //     // if (response.data.)
+  //   };
+  //   fetchData();
+  // }, []);
+
   const handleInputChange = (e) => {
     const { id, value } = e.target;
     setFormData({ ...formData, [id]: value });
   };
   const handleSubmit = (e) => {
     e.preventDefault();
+    let auth_id = "";
     signInWithEmailAndPassword(auth, formData.email, formData.password)
-      .then((userCredential) => {
-        navigate("/all-surahs", { state: userCredential.user.uid });
+      .then(async (userCredential) => {
+        auth_id = userCredential.user.uid;
+        const response = await axios.get(
+          `${API_ENDPOINT}/users?auth_id=${auth_id}`
+        );
+        if (response.data.revisionSurahs.length === 0) {
+          navigate("/all-surahs", { state: auth_id });
+        } else {
+          navigate("/home-screen", { state: { auth_id } });
+        }
       })
       .catch((error) => {
         const errorCode = error.code;
