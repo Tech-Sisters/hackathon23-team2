@@ -1,26 +1,47 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import "./FinalRankingTest.css";
 import { BsArrowRightCircle } from "react-icons/bs";
+import axios from "axios";
+import { API_ENDPOINT } from "../../config";
 
 const FinalRankingTest = () => {
   let navigate = useNavigate();
   const [selectedStrength, setSelectedStrength] = useState("");
   const [nextIconVisible, setNextIconVisible] = useState(false);
   const [showConfirmationPage, setShowConfirmationPage] = useState(false);
+  const [surah, setSurah] = useState({});
   const location = useLocation();
-  const { testObj, ayahHelpCounter } = location.state;
+  const { surahId, ayahHelpCounter, auth_id, surahIndex } = location.state;
+  useEffect(() => {
+    const fetchData = async () => {
+      const surahResponse = await axios.get(
+        `${API_ENDPOINT}/users?auth_id=${auth_id}`
+      );
+      setSurah(
+        surahResponse.data.juzzAmma.filter((surah) => surah.id === surahId)[0]
+      );
+    };
+    fetchData();
+  }, []);
+
   const handleSelectedStrength = (strength) => {
     setSelectedStrength(strength);
     setNextIconVisible(true);
   };
-  const handleNextButtonClick = () => {
-    //update strength in api
+  const handleNextButtonClick = async () => {
+    let surahIndexParam = surahIndex === 0 ? "first_surah" : "second_surah";
+    const res = await axios.put(
+      `${API_ENDPOINT}/surahs/updateSurah?auth_id=${auth_id}&surahId=${surahId}&revisedSurah=${surahIndexParam}`,
+      {
+        strength: selectedStrength,
+      }
+    );
     setShowConfirmationPage(true);
   };
   const handleSurahHistoryNavigate = () => {
-    //send surah id to api
-    navigate("/surah-history", { state: testObj.id });
+    let surahId = surah.id;
+    navigate("/surah-history", { state: { surahId, auth_id } });
   };
   return (
     <>
@@ -29,7 +50,7 @@ const FinalRankingTest = () => {
           <div className="container-fluid py-5 border rounded test-container d-flex flex-column justify-content-between">
             <div className="row my-3">
               <div className="col-12 d-flex flex-column align-items-center">
-                <h2 className="surahName">{testObj.surahName}</h2>
+                <h2 className="surahName">{surah.name}</h2>
                 <h6 className="fw-normal text">Test Complete, Alhamdulillah</h6>
                 <hr className="border border-dark border-top-2 opacity-25 w-100" />
               </div>

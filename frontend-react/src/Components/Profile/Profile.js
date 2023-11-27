@@ -1,6 +1,33 @@
 import CircularChart from "../CircularChart/CircularChart";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { API_ENDPOINT } from "../../config";
+import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "../../firebase";
 
 const Profile = () => {
+  const [surahStrengthCount, setSurahStrengthCount] = useState({});
+  const [isLoading, setIsLoading] = useState(true);
+  useEffect(() => {
+    const fetchData = async (auth_id) => {
+      try {
+        const res = await axios.get(
+          `${API_ENDPOINT}/surahs/surahStrengthCount?auth_id=${auth_id}`
+        );
+        setSurahStrengthCount(res.data);
+        setIsLoading(false);
+      } catch (error) {
+        setIsLoading(false);
+      }
+    };
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        fetchData(user.uid);
+      }
+    });
+  }, []);
+
   return (
     <>
       <div className="container-fluid ">
@@ -26,7 +53,11 @@ const Profile = () => {
         </div>
         <div className="row p-3 mb-4 justify-content-center">
           <div className="col-10 text-center">
-            <CircularChart />
+            {isLoading ? (
+              <LoadingSpinner />
+            ) : (
+              <CircularChart surahStrengthCount={surahStrengthCount} />
+            )}
           </div>
         </div>
       </div>

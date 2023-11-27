@@ -1,11 +1,10 @@
-import { useEffect, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import Chart from "chart.js/auto";
 
-const CircularChart = () => {
-  const s = 15;
+const CircularChart = (props) => {
   const chartRef = useRef(null);
   const chartInstance = useRef(null);
-
+  const surahStrengthCount = props.surahStrengthCount;
   useEffect(() => {
     const canvas = chartRef.current;
     const context = canvas.getContext("2d");
@@ -18,15 +17,20 @@ const CircularChart = () => {
       type: "doughnut",
       data: {
         labels: [
-          `Weak: ${s} Surah`,
-          `Medium: ${s} Surah`,
-          `Strong: ${s} Surah`,
-          `Not Selected: ${s} Surah`,
+          `Weak: ${surahStrengthCount.weakCount} Surah`,
+          `Medium: ${surahStrengthCount.mediumCount} Surah`,
+          `Strong: ${surahStrengthCount.strongCount} Surah`,
+          `Not Selected: ${surahStrengthCount.emptyCount} Surah`,
         ],
         datasets: [
           {
             label: "Circular Chart",
-            data: [15, 15, 15, 30],
+            data: [
+              surahStrengthCount.weakCount,
+              surahStrengthCount.mediumCount,
+              surahStrengthCount.strongCount,
+              surahStrengthCount.emptyCount,
+            ],
             backgroundColor: ["#D39898", "#D3C398", "#A7C39F", "#847EA7"],
           },
         ],

@@ -1,42 +1,58 @@
-import { Link, useNavigate } from "react-router-dom"
-import { useState } from "react"
-import { signInWithEmailAndPassword } from "firebase/auth"
-import { auth } from "../../firebase"
-import { getAccessToken, loginFirebaseUser } from "../../Redux/Actions/userActions"
-import { useDispatch } from "react-redux"
-
+import { Link, useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../../firebase";
+import {
+  getAccessToken,
+  loginFirebaseUser,
+} from "../../Redux/Actions/userActions";
+import { useDispatch } from "react-redux";
+import { API_ENDPOINT } from "../../config";
+import axios from "axios";
 const LogIn = () => {
-  const dispatch = useDispatch()
-  let navigate = useNavigate()
+  const dispatch = useDispatch();
+  let navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: "",
-    password: ""
-  })
+    password: "",
+  });
+  const [userLoggedIn, setUserLoggedIn] = useState(false);
   const handleInputChange = (e) => {
-    const { id, value } = e.target
-    setFormData({ ...formData, [id]: value })
-  }
+    const { id, value } = e.target;
+    setFormData({ ...formData, [id]: value });
+  };
   const handleSubmit = async (e) => {
-    e.preventDefault()
-    const userCredentials = await signInWithEmailAndPassword(auth, formData.email, formData.password)
+    e.preventDefault();
+    const userCredentials = await signInWithEmailAndPassword(
+      auth,
+      formData.email,
+      formData.password
+    );
 
-    const firebaseUser = userCredentials.user
-    const firebaseUid = firebaseUser.uid
-    const idToken = await firebaseUser.getIdToken()
+    const firebaseUser = userCredentials.user;
+    const firebaseUid = firebaseUser.uid;
+    const idToken = await firebaseUser.getIdToken();
 
     try {
-      const foundUser = await dispatch(loginFirebaseUser(idToken, firebaseUid))
+      const foundUser = await dispatch(loginFirebaseUser(idToken, firebaseUid));
 
       if (foundUser) {
         // Navigate only if foundUser is successfully returned
-
-        navigate("/home-screen", { state: formData.password })
+        const response = await axios.get(
+          `${API_ENDPOINT}/users?auth_id=${firebaseUid}`
+        );
+        if (response.data.revisionSurahs.length === 0) {
+          navigate("/all-surahs", { state: firebaseUid });
+        } else {
+          navigate("/home-screen", { state: { firebaseUid } });
+        }
+        //  navigate("/home-screen", { state: formData.password });
       }
     } catch (error) {
-      console.error("Error in getting access token:", error)
-      alert("error with login")
+      console.error("Error in getting access token:", error);
+      alert("error with login");
     }
-  }
+  };
 
   return (
     <>
@@ -75,14 +91,20 @@ const LogIn = () => {
               </div>
               <div className="row justify-content-start mb-3">
                 <div className="col-12">
-                  <Link to="/sign-up" className="text text-decoration-underline fw-bold">
+                  <Link
+                    to="/sign-up"
+                    className="text text-decoration-underline fw-bold"
+                  >
                     Or create your account here
                   </Link>
                 </div>
               </div>
               <div className="row justify-content-center">
                 <div className="col-6">
-                  <button type="submit" className="submitButton rounded-pill p-2">
+                  <button
+                    type="submit"
+                    className="submitButton rounded-pill p-2"
+                  >
                     Submit
                   </button>
                 </div>
@@ -92,6 +114,6 @@ const LogIn = () => {
         </div>
       </div>
     </>
-  )
-}
-export default LogIn
+  );
+};
+export default LogIn;
