@@ -59,7 +59,7 @@ const BeginTest = () => {
                   </span>
                   <h6 className="text p-2">Last Tested On:</h6>
                   <h6 className="fw-normal text ">
-                    {surah.surahTestHistory.revisions[0].date
+                    {surah.surahTestHistory.revisions.length !==0
                       ? moment(surah.surahTestHistory.revisions[0].date).format(
                           "DD/MM/YYYY"
                         )
