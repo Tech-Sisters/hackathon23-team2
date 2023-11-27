@@ -21,14 +21,26 @@
 </div>
   <br/>
   <br/>
+  <div>
+    <strong>
+      Contents
+    </strong>
+<ul>
+ <li><a href="#idea">The Idea</a></li>
+    <li><a href="#audience">The Audience</a></li>
+    <li><a href="#solution">The Solution</a></li>
+    <li><a href="#prototype">The Prototype</a></li>
+  
+</ul>
+  </div>
 <div>
-  <h2>
+  <h2 id="idea">
     The Idea
   </h2>
   <p>
     A product that will be of benefit to the muslim community, focusing on Qur'an memorisation and a female audience.
   <p>
-      <h2>
+      <h2 id="audience">
     Why a female audience?
   </h2>
   <p>
@@ -37,7 +49,7 @@
     <br/>
    Furthermore, women, particularly those with household or childcare responsibilities, might find it challenging to attend regular Quran study classes. An app allows them to learn and practice at their own pace and in the comfort of their homes. The community element of the application can keeps such women motivated and allows them to feel the same support and encouragement from attending live classes.
   <p>
-  <h2>
+  <h2 id="solution">
     The Solution
   </h2>
   <p>
@@ -62,7 +74,7 @@
     </ul>
   <p>
     <br/>
-  <h2>
+  <h2 id="prototype">
     The Prototype
   </h2>
   <p>
