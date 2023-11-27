@@ -39,8 +39,6 @@ const UserController = {
       next(error)
     }
   }
-
-
 }
 
-export default UserController;
+export default UserController

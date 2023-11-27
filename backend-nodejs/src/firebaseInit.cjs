@@ -27,7 +27,7 @@ function decryptFile(filePath, password) {
 
   let decrypted = decipher.update(encryptedContent)
   decrypted = Buffer.concat([decrypted, decipher.final()])
-
+  console.log("decryption complete")
   return JSON.parse(decrypted.toString("utf8"))
 }
 
