@@ -33,6 +33,8 @@
   
 </ul>
   </div>
+  <br/>
+  <br/>
 <div>
   <h2 id="idea">
     The Idea
