@@ -32,12 +32,12 @@
     🧐 The Solution
   </h2>
   <p>
-  We wanted to create an application that helped users to track their Qur'an memorisation, and provided insights to their 
-  progress. This application is needed so that users can take accountability 
-  for their memorisation and view their weak points. 
-  <br/>
+  We wanted to create an application that helped users to track their Qur'an memorisation, 
+   and provided insights to their  progress. This application is needed so that users can take 
+    accountability for their memorisation and view their weak points. 
   It was important for the UI to be smooth and easy to use, and for users to be prompted to test their weaker surahs.
   <br/>
+   <br/>
   Bearing in mind our criteria, we defined the following features:
       <ul>
       <li>Complete daily tests with a focus on their weaker Surahs.</li>
@@ -52,33 +52,41 @@
   <p>
   The prototype has been built and designed as a mobile-first fullstack web application, as this would make the transition to a mobile app much smoother.
 <br/>
+     <br/>
 The below diagram provides an overview of the architectural design for our prototype. 
 We made the decision to use Firebase for efficient user authentication, and React on the frontend for it's ability to create reusable components which make up much of the UI.
 <img src="/assets/architecture-diagram.png" alt="architecture diagram">
 
-The following diagram illustrates the borader app flow:
+The following diagram illustrates the broader app flow:
+<br/>
 <img src="/assets/app-flow-complete.png" alt="app flow complicated">
 
-From this flow, we simplified and implemented the core functionality which is illustrated by this simplified diagram:
+From this flow, we implemented the core functionality which is illustrated by this simplified diagram:
+<br/>
 <img src="/assets/app-flow.png" alt="app flow">
 
 </div>
 
-# Instruction to the team:
+## 🏁 Get up and running:
 
-## When working on the project's frontend or backend:
+These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
 
+### Prerequisites:
+You will need access to the database from the team if working with the a local backend.
+
+### Installing:
 Navigate to the frontend or backend directory.
 
 For example, if working on the frontend:
 
-`cd frontend-react`
-`npm install`
-`npm start`
+1. `cd frontend-react` <br/>
+2. `npm install` <br/>
+3. `npm start`
+<br/>
+If working on the backend, you can use the command `npm run dev` to work with the development environment. 
+<br/>
+<strong>note: </strong>
 
-If working on the backend, you can use the command `npm run dev`
-to automatically reload the server after .js file changes.
-
-## When running Git commands:
+### When running Git commands:
 
 Ensure you're at the root directory of the project to execute Git commands. This step is crucial as Git operates based on the current directory.
