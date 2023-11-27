@@ -23,48 +23,73 @@
   <br/>
 <div>
   <h2>
-    🧐 The Idea
+    The Idea
   </h2>
   <p>
     A product that will be of benefit to the muslim community, focusing on Qur'an memorisation and a female audience.
   <p>
-  <h2>
-    🧐 The Solution
+      <h2>
+    Why a female audience?
   </h2>
   <p>
-  We wanted to create an application that helped users to track their Qur'an memorisation, 
-   and provided insights to their  progress. This application is needed so that users can take 
-    accountability for their memorisation and view their weak points. 
-  It was important for the UI to be smooth and easy to use, and for users to be prompted to test their weaker surahs.
-  <br/>
-   <br/>
-  Bearing in mind our criteria, we defined the following features:
-      <ul>
-      <li>Complete daily tests with a focus on their weaker Surahs.</li>
-      <li>Take initiative and engage in their own self-initialised tests.</li>
-      <li>Get personalised reports and insights of their Qur'an hustory.</li>
-      <li>Be part of a community of like-minded Muslim women who are actively engaging in strengthening their memorisation.</li>
-    </ul>
+    We intend to create a community around Qur'an memorisation, and believe that keeping our focus to Muslim women will allow us to create a community that is inline with our beliefs around hayā (modesty). Having this clear boundary will give our users comfort, and allows us to create an application that speaks to our audience, and informs our decisions.
+<br/>
+    <br/>
+   Furthermore, women, particularly those with household or childcare responsibilities, might find it challenging to attend regular Quran study classes. An app allows them to learn and practice at their own pace and in the comfort of their homes. The community element of the application can keeps such women motivated and allows them to feel the same support and encouragement from attending live classes.
   <p>
   <h2>
-    🧐 The Prototype
+    The Solution
+  </h2>
+  <p>
+  For many Muslims, memorizing the Quran is a deeply valued religious goal.
+    <br/>
+    <br/>
+    We wanted to create an application that helped users to track their Qur'an memorisation, 
+   and provided insights to their progress. This application is needed so that users can take 
+    accountability for their memorisation and view their weak points, and improve them. This targeted approach can be more effective than general methods, as we remind users of their weak points.
+    <br/>
+    <br/>
+    With the increasing use of technology in education, such an app aligns with modern learning trends, utilizing tools interactive tests and visual pointers to enhance the learning experience.
+  
+  <br/>
+   <br/>
+  With this in mind, we defined the following criteria for Tazkeer:
+      <ul>
+      <li>The user shall complete daily tests with a focus on their weaker Surahs.</li>
+      <li>The user shall have the opportunity to take initiative and engage in their own self-initialised tests.</li>
+      <li>The user shall have get personalised reports and insights of their Qur'an history.</li>
+      <li>The user shall have be part of a community of like-minded Muslim women who are actively engaging in strengthening their memorisation.</li>
+    </ul>
+  <p>
+    <br/>
+  <h2>
+    The Prototype
   </h2>
   <p>
   The prototype has been built and designed as a mobile-first fullstack web application, as this would make the transition to a mobile app much smoother.
 <br/>
-     <br/>
-The below diagram provides an overview of the architectural design for our prototype. 
-We made the decision to use Firebase for efficient user authentication, and React on the frontend for it's ability to create reusable components which make up much of the UI.
-<img src="/assets/architecture-diagram.png" alt="architecture diagram">
+ <br/>
 
-The following diagram illustrates the broader app flow:
+
+The following diagram illustrates the broader app flow. It was essential to create a smooth user experience, so we mapped out the user journey and designed a simple yet attractive interface.
+<br/>
 <br/>
 <img src="/assets/app-flow-complete.png" alt="app flow complicated">
 
 From this flow, we implemented the core functionality which is illustrated by this simplified diagram:
 <br/>
+<br/>
 <img src="/assets/app-flow.png" alt="app flow">
-
+<br/>
+The below diagram provides an overview of the architectural design for our prototype. 
+<br/>
+<br/>
+We made the decision to use Firebase for efficient user authentication, both on the frontend and backend.
+<br/>
+<br/>
+React was implemented on the frontend for it's ability to create reusable components which make up much of the UI, and for it's compatibility with a larger ecosystem. We intend to launch Tazkeer as a mobile app, so the transition to React Native will be advantageous.
+<br/>
+<img src="/assets/architecture-diagram.png" alt="architecture diagram">
 </div>
 
 ## 🏁 Get up and running:
