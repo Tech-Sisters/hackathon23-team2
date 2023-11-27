@@ -26,7 +26,7 @@ const CurrentRevisionController = {
       // *** Initial values for revisionSurahs ***
       // find initial values for revisionSurahs (two random surahs that have initialStrength)
       const surahsWithInitialStrength = user.juzzAmma.filter(item =>
-        item && item.surahTestHistory && item.surahTestHistory.initialStrength !== undefined
+        item && item.surahTestHistory && item.surahTestHistory.initialStrength !== null
       );
 
       const firstTwoSurahsWithInitialStrength = surahsWithInitialStrength.slice(0, 2);

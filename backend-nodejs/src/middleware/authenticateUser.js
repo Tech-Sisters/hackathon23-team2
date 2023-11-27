@@ -3,12 +3,15 @@ import firebase from "../firebaseInit.cjs"
 const authenticateUser = (req, res, next) => {
   const idToken = req.headers.authorization
 
+
   if (!idToken) {
     return res.status(401).send({ message: "No token provided" })
   }
 
   if (idToken && idToken.split(" ")[0] !== "Bearer") {
+
     return res.status(401).send({ message: "Invalid token" })
+
   }
 
   const token = idToken.split(" ")[1]
@@ -27,3 +30,4 @@ const authenticateUser = (req, res, next) => {
 }
 
 export default authenticateUser
+
