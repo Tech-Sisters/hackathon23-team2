@@ -19,7 +19,7 @@ const SurahHistory = () => {
       try {
         console.log("in try block")
         const response = await axios.get(`http://localhost:3000/surahs/surahHistory?auth_id=123321&surahId=78`);
-        //const response = await axios.get(`${API_ENDPOINT}/surahs/surahHistory/${auth_id}/${surahId}`);
+        //const response = await axios.get(`${API_ENDPOINT}/surahs/surahHistory?auth_id=${auth_id}/?surahId=${surahId}`);
         setSurahHistory(response.data);
         console.log(response.data)
         setIsLoading(false);
