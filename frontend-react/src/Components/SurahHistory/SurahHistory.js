@@ -22,7 +22,6 @@ const SurahHistory = () => {
         const response = await axios.get(
           `${API_ENDPOINT}/surahs/surahHistory?auth_id=${auth_id}&surahId=${surahId}`
         );
-        console.log(response.data);
         setSurahHistory(response.data);
         setIsLoading(false);
       } catch (error) {
