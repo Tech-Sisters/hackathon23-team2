@@ -67,7 +67,7 @@ export const loginFirebaseUser = (idToken, firebaseUid) => {
         return user
       } else {
         const errorResponse = await response.json()
-        console.log("error creating user", errorResponse.message)
+        console.log("error logging in user", errorResponse.message)
       }
     } catch (error) {
       console.log(error)
