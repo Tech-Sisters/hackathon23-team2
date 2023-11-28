@@ -31,7 +31,6 @@ const CurrentRevisionController = {
 
       const firstTwoSurahsWithInitialStrength = surahsWithInitialStrength.slice(0, 2);
 
-      // extracting id and name
       const idsAndNamesOfFirstTwoSurahs = firstTwoSurahsWithInitialStrength.map(item => ({
         id: item.id,
         name: item.name
@@ -72,13 +71,14 @@ const CurrentRevisionController = {
         return res.status(404).send({ message: "User not found" })
       }
 
-      // the current 'color code number' of either first_surah or second_surah
+      // the current strength rating representing schedule 1.strong-2.weak-3.medium-4.weak-5.weak-6.medium-7.weak
       const currentStrengthRating = user.currentRevision[revisedSurah];
 
       // incrementing strength rating
       const findNewStrengthRating = () => {
         let newStrengthRating;
-        if (currentStrengthRating >= 1 && currentStrengthRating < 7) { //we only increment until 7 as per our 'color code', after that we start from the beginning
+        // increment only until 7 as per our schedule, after that start from the beginning
+        if (currentStrengthRating >= 1 && currentStrengthRating < 7) {
           newStrengthRating = currentStrengthRating + 1
         } else {
           newStrengthRating = 1;
@@ -88,7 +88,7 @@ const CurrentRevisionController = {
       };
 
 
-      // determining strength based on the strengthRating color code model
+      // determining strength based on the strengthRating
       const determineStrength = (newStrengthRating) => {
         let strength;
         if (newStrengthRating === 1) {
@@ -129,11 +129,11 @@ const CurrentRevisionController = {
             surah.surahTestHistory.revisions.length === 0);
 
           if (surahsWithEmptyRevisions.length > 0) {
-            // Found surahs with empty revisions
+
             const oldestSurah = surahsWithEmptyRevisions[0];
             return oldestSurah;
-            // Return the first surah with empty revisions
-            // if there are no surahs without revisions, we start comparing which revision is oldest  
+
+            // if there are no surahs without revisions, compare which revision is oldest  
           } else {
             const surahsWithPopulatedRevisions = filteredSurahs.filter((surah) =>
               surah.surahTestHistory.revisions.length > 0);
@@ -144,7 +144,7 @@ const CurrentRevisionController = {
                 const oldestDateA = a.surahTestHistory.revisions[0]?.date || new Date(0);
                 const oldestDateB = b.surahTestHistory.revisions[0]?.date || new Date(0);
                 if (oldestDateA === oldestDateB) {
-                  return 0; // Dates are equal; no change in order needed
+                  return 0;
                 }
                 return oldestDateA - oldestDateB;
               })

@@ -20,7 +20,6 @@ const port = process.env.PORT || 3004
 const corsOptions = {
   cors: {
     origin: process.env.FE_URL || process.env.FE_PROD_URL || process.env.FE_VERCEL_URL,
-    // origin: "*",
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"]
   }
