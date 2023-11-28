@@ -28,7 +28,7 @@
  <li><a href="#idea">The Idea</a></li>
     <li><a href="#audience">The Audience</a></li>
     <li><a href="#solution">The Solution</a></li>
-    <li><a href="#tls">Traffic Light System</a></li>
+    <li><a href="#tls">A System For Testing Surahs</a></li>
     <li><a href="#prototype">The Prototype</a></li>
     <li><a href="#usage">Usage</a></li>
   
@@ -85,6 +85,32 @@
   <p>
   <br/>
   <br/>
+    <h2 id="tls">
+   A System For Testing Surahs
+  </h2>
+  <p>
+To test and record the user's strength in each Surah, we adpoted a traffic light system for it's visual cues to the user. 
+<br/>
+<br/>
+When a user signs up to the app, they are promted to select their memorisation strength for each Surah in the Juzzamma.
+<br/>
+<ul>
+<li><strong>Red</strong>: signals weak memorisation</li>
+<li><strong>Yellow</strong>: signals medium strength</li>
+<li><strong>Green</strong>: signals memorisation to a high or perfect level</li>
+</ul>
+<br/>
+After revising a Surah, the user is prompted to select their strength again, so that they are taking accountability of their memorisation and journey.
+<br/>
+<img src="/assets/tls-overview.png" alt="traffic light system">
+<br/>
+To build on the testing of Surahs, we have created a revision schedule that follows a pattern and repeats every 7 surahs. 
+<br/>
+This revision cycle prioritises Surahs have not recently been memorised, and gives more weight to weaker Surahs. This system suggests 2 surahs per day to the user, so that they are making sure that their weaker Surahs are being practiced, and that medium and strong Surahs are not slipping down in strength. Furthermore, we have included Strong surahs in the revision cycle to boost user confidence.
+<img src="/assets/daily-cycle.png" alt="daily cycle">
+  <p>
+  <br/>
+  <br/>
 
   <h2 id="prototype">
     The Prototype
@@ -93,7 +119,6 @@
   The prototype has been built and designed as a mobile-first fullstack web application, as this would make the transition to a mobile app much smoother.
 <br/>
  <br/>
-
 
 The following diagram illustrates the broader app flow. It was essential to create a smooth user experience, so we mapped out the user journey and designed a simple yet attractive interface.
 <br/>
@@ -105,7 +130,7 @@ From this flow, we implemented the core functionality which is illustrated by th
 <br/>
 <img src="/assets/app-flow.png" alt="app flow">
 <br/>
-The below diagram provides an overview of the architectural design for our prototype. 
+The below diagram provides an overview of the architectural design for our prototype.
 <br/>
 <br/>
 We made the decision to use Firebase for efficient user authentication, both on the frontend and backend.
@@ -114,20 +139,23 @@ We made the decision to use Firebase for efficient user authentication, both on 
 React was implemented on the frontend for it's ability to create reusable components which make up much of the UI, and for it's compatibility with a larger ecosystem. We intend to launch Tazkeer as a mobile app, so the transition to React Native will be advantageous.
 <br/>
 <img src="/assets/architecture-diagram.png" alt="architecture diagram">
+
 </div>
 <br/>
 <br/>
 
 <h2 id="usage">
   🏁 Get up and running:
-</h2> 
+</h2>
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
 
 ### Prerequisites:
+
 You will need access to the database from the team if working with the a local backend.
 
 ### Installing:
+
 Navigate to the frontend or backend directory.
 
 For example, if working on the frontend:
@@ -135,10 +163,9 @@ For example, if working on the frontend:
 1. `cd frontend-react` <br/>
 2. `npm install` <br/>
 3. `npm start`
-<br/>
-If working on the backend, you can use the command `npm run dev` to work with the development environment. 
-<br/>
-
+   <br/>
+   If working on the backend, you can use the command `npm run dev` to work with the development environment.
+   <br/>
 
 ### When running Git commands:
 
