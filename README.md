@@ -80,7 +80,6 @@
       <li>The user shall complete daily tests with a focus on their weaker Surahs.</li>
       <li>The user shall have the opportunity to take initiative and engage in their own self-initialised tests.</li>
       <li>The user shall have get personalised reports and insights of their Qur'an history.</li>
-      <li>The user shall have be part of a community of like-minded Muslim women who are actively engaging in strengthening their memorisation.</li>
     </ul>
   <p>
   <br/>
