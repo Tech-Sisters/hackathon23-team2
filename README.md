@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="/assets/tazkeer_banner_dark.png" alt="Tazkeer Banner">
+  <img src="/assets/tazkeerBanner.png" alt="Tazkeer Banner">
 </p>
 
 <div align="center">
@@ -106,7 +106,7 @@ After revising a Surah, the user is prompted to select their strength again, so 
 To build on the testing of Surahs, we have created a revision schedule that follows a pattern and repeats every 7 surahs. 
 <br/>
 <br/>
-This revision cycle prioritises Surahs have not recently been memorised, and gives more weight to weaker Surahs. This system suggests 2 surahs per day to the user, so that they are making sure that their weaker Surahs are being practiced, and that medium and strong Surahs are not slipping down in strength. Furthermore, we have included Strong surahs in the revision cycle to boost user confidence.
+This revision cycle prioritises Surahs that have not recently been revised and gives more weight to weaker Surahs. This system suggests 2 surahs per day to the user, so that they are making sure that their weaker Surahs are being practiced, and that medium and strong Surahs are not slipping down in strength. Furthermore, we have included Strong surahs in the revision cycle to boost user confidence.
 <img src="/assets/daily-cycle.png" alt="daily cycle">
   <p>
   <br/>
