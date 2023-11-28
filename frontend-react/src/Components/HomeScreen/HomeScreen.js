@@ -28,25 +28,54 @@ const HomeScreen = () => {
         );
         setAuthId(auth_id);
         setUserData(response.data);
-        setSelectedStrengthSurahs(
-          response.data.juzzAmma.filter(
-            (surah) => surah.surahTestHistory.initialStrength !== null
-          )
+        let selectedSurahs = response.data.juzzAmma.filter(
+          (surah) => surah.surahTestHistory.initialStrength !== null
         );
-        setFilteredSurahs(
-          response.data.juzzAmma.filter(
-            (surah) => surah.surahTestHistory.initialStrength !== null
-          )
-        );
-        const revisionSurahsIDs = Object.entries(
-          response.data.revisionSurahs
-        ).map(([_, value]) => value.id);
-        setRevisionSurahs(
-          response.data.juzzAmma.filter((surah) =>
-            revisionSurahsIDs.includes(surah.id)
-          )
-        );
+        setSelectedStrengthSurahs(selectedSurahs);
+        setFilteredSurahs(selectedSurahs);
 
+        // Extract IDs from revisionSurahs
+        const revisionSurahsIDs = Object.values(
+          response.data.revisionSurahs
+        ).map((value) => value.id);
+
+        // Set revisionSurahs based on the filter condition
+        const revisionSurahsFiltered = response.data.juzzAmma.filter((surah) =>
+          revisionSurahsIDs.includes(surah.id)
+        );
+        setRevisionSurahs(revisionSurahsFiltered);
+
+        // Fetch and update the length for each revisionSurah
+        const lengthPromises = revisionSurahsFiltered.map(async (surah) => {
+          try {
+            const lengthResponse = await axios.get(
+              `${API_ENDPOINT}/surahs/ayat?surahId=${surah.id}`
+            );
+            return { id: surah.id, length: lengthResponse.data.length };
+          } catch (error) {
+            console.error(error);
+            return null;
+          }
+        });
+        Promise.all(lengthPromises)
+          .then((lengths) => {
+            // Update revisionSurahs with the obtained lengths
+            const updatedRevisionSurahs = revisionSurahsFiltered.map(
+              (surah) => {
+                const lengthData = lengths.find(
+                  (item) => item && item.id === surah.id
+                );
+                if (lengthData) {
+                  return { ...surah, length: lengthData.length };
+                }
+                return surah;
+              }
+            );
+            setRevisionSurahs(updatedRevisionSurahs);
+          })
+          .catch((error) => {
+            console.error(error);
+          });
         setIsLoading(false);
       } catch (error) {
         setIsLoading(false);
@@ -58,24 +87,6 @@ const HomeScreen = () => {
       }
     });
   }, []);
-
-  // const surahsID = selectedStrengthSurahs.map((obj) => obj.id);
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       for (const id of surahsID) {
-  //         const response = await axios.get(
-  //           `${API_ENDPOINT}/surahs/ayat?surahId=${id}`
-  //         );
-  //         console.log(response.data.length);
-  //         setNumberOfAyahs((prevAyahs) => [...prevAyahs, response.data.length]);
-  //         //console.log("Her", numberOfAyahs);
-  //       }
-  //     } catch (error) {}
-  //   };
-  //   fetchData();
-  //   setFilteredSurahs(selectedStrengthSurahs);
-  // }, []);
 
   const handleClickTestSurah = (surahId, surahIndex) => {
     navigate("/begin-test", { state: { surahId, auth_id, surahIndex } });
@@ -126,9 +137,7 @@ const HomeScreen = () => {
                         <h6 className="FontSize16">{surah.name}</h6>
                       </div>
                       <div className="col-12 text">
-                        <h6 className="FontSize12">
-                          {/* Ayah 1 - {numberOfAyahs[index]} */}
-                        </h6>
+                        <h6 className="FontSize12">Ayah 1 - {surah.length}</h6>
                       </div>
                     </div>
                   </div>

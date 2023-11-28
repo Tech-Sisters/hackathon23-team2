@@ -136,7 +136,7 @@ const SignUp = () => {
               <div className="row">
                 <div className="col-12">
                   <label htmlFor="username" className="form-label text">
-                    Name
+                    Username
                   </label>
                   <input
                     type="text"
