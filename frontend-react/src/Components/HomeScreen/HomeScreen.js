@@ -18,9 +18,9 @@ const HomeScreen = () => {
   let navigate = useNavigate();
   useEffect(() => {
     const fetchData = async (auth_id) => {
-      const token = localStorage.getItem('accessToken');
+      const token = localStorage.getItem("accessToken");
       if (token) {
-        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+        axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
       }
       try {
         const response = await axios.get(
@@ -43,7 +43,6 @@ const HomeScreen = () => {
         const revisionSurahsFiltered = response.data.juzzAmma.filter((surah) =>
           revisionSurahsIDs.includes(surah.id)
         );
-        setRevisionSurahs(revisionSurahsFiltered);
 
         // Fetch and update the length for each revisionSurah
         const lengthPromises = revisionSurahsFiltered.map(async (surah) => {
@@ -71,7 +70,29 @@ const HomeScreen = () => {
                 return surah;
               }
             );
-            setRevisionSurahs(updatedRevisionSurahs);
+            const transformedData = Object.entries(
+              response.data.revisionSurahs
+            ).map((item) => {
+              let key = item[0];
+              let value = item[1].id;
+              return { revisedSurahParam: key, surahId: value };
+            });
+            const revisedParamrsRevisionSurahs = updatedRevisionSurahs.map(
+              (surah) => {
+                const foundData = transformedData.find(
+                  (d) => d.surahId === surah.id
+                );
+                if (foundData) {
+                  return {
+                    ...surah,
+                    revisedParam: foundData.revisedSurahParam,
+                  };
+                } else {
+                  return { ...surah };
+                }
+              }
+            );
+            setRevisionSurahs(revisedParamrsRevisionSurahs);
           })
           .catch((error) => {
             console.error(error);
@@ -128,7 +149,9 @@ const HomeScreen = () => {
               {revisionSurahs.map((surah, index) => (
                 <div
                   className="row my-3 CategoryBorder WhiteBackground text p-3 d-flex justify-content-center"
-                  onClick={() => handleClickTestSurah(surah.id, index)}
+                  onClick={() =>
+                    handleClickTestSurah(surah.id, surah.revisedParam)
+                  }
                   key={surah.id}
                 >
                   <div className="col-8">
@@ -164,29 +187,33 @@ const HomeScreen = () => {
               <div className="row CategoryBorder my-3 WhiteBackground text p-3">
                 <div className="col-lg-12 d-flex flex-lg-wrap justify-content-around">
                   <button
-                    className={`strengthBadge rounded-pill AllFilter m-2 ${selectedStrength === "All" ? "isClicked" : ""
-                      }`}
+                    className={`strengthBadge rounded-pill AllFilter m-2 ${
+                      selectedStrength === "All" ? "isClicked" : ""
+                    }`}
                     onClick={() => handleFilterSurahStrength("All")}
                   >
                     All
                   </button>
                   <button
-                    className={`WeakColor strengthBadge rounded-pill m-2 ${selectedStrength === "Weak" ? "isClicked" : ""
-                      }`}
+                    className={`WeakColor strengthBadge rounded-pill m-2 ${
+                      selectedStrength === "Weak" ? "isClicked" : ""
+                    }`}
                     onClick={() => handleFilterSurahStrength("Weak")}
                   >
                     Weak
                   </button>
                   <button
-                    className={`MediumColor strengthBadge rounded-pill m-2 ${selectedStrength === "Medium" ? "isClicked" : ""
-                      }`}
+                    className={`MediumColor strengthBadge rounded-pill m-2 ${
+                      selectedStrength === "Medium" ? "isClicked" : ""
+                    }`}
                     onClick={() => handleFilterSurahStrength("Medium")}
                   >
                     Medium
                   </button>
                   <button
-                    className={`StrongColor strengthBadge rounded-pill m-2 ${selectedStrength === "Strong" ? "isClicked" : ""
-                      }`}
+                    className={`StrongColor strengthBadge rounded-pill m-2 ${
+                      selectedStrength === "Strong" ? "isClicked" : ""
+                    }`}
                     onClick={() => handleFilterSurahStrength("Strong")}
                   >
                     Strong

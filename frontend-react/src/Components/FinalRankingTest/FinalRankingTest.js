@@ -12,7 +12,8 @@ const FinalRankingTest = () => {
   const [showConfirmationPage, setShowConfirmationPage] = useState(false);
   const [surah, setSurah] = useState({});
   const location = useLocation();
-  const { surahId, ayahHelpCounter, auth_id, surahIndex, updateStrengthOnly } = location.state || {};
+  const { surahId, ayahHelpCounter, auth_id, surahIndex, updateStrengthOnly } =
+    location.state || {};
   useEffect(() => {
     const fetchData = async () => {
       const surahResponse = await axios.get(
@@ -31,11 +32,11 @@ const FinalRankingTest = () => {
   };
   const handleNextButtonClick = async () => {
     let surahIndexParam = surahIndex === 0 ? "first_surah" : "second_surah";
-
+    console.log(surahIndexParam);
     if (location.state && location.state.updateStrengthOnly === true) {
-      const token = localStorage.getItem('accessToken');
+      const token = localStorage.getItem("accessToken");
       if (token) {
-        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+        axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
       }
       const res = await axios.put(
         `${API_ENDPOINT}/surahs/updateSurahStrengthOnly?auth_id=${auth_id}&surahId=${surah.id}`,
@@ -44,9 +45,9 @@ const FinalRankingTest = () => {
         }
       );
     } else {
-      const token = localStorage.getItem('accessToken');
+      const token = localStorage.getItem("accessToken");
       if (token) {
-        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+        axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
       }
       const res = await axios.put(
         `${API_ENDPOINT}/surahs/updateSurah?auth_id=${auth_id}&surahId=${surahId}&revisedSurah=${surahIndexParam}`,
@@ -82,8 +83,8 @@ const FinalRankingTest = () => {
                     {ayahHelpCounter === 0
                       ? "You didn't require any help."
                       : ayahHelpCounter === 1
-                        ? "You required help on 1 Ayah."
-                        : `You required help on ${ayahHelpCounter} Ayat.`}
+                      ? "You required help on 1 Ayah."
+                      : `You required help on ${ayahHelpCounter} Ayat.`}
                   </h6>
                 </div>
               </div>
@@ -110,22 +111,25 @@ const FinalRankingTest = () => {
               <div className="row d-flex justify-content-center m-2">
                 <div className="col-12 d-flex flex-column align-items-center justify-content-center">
                   <button
-                    className={`WeakColor strengthButton rounded-pill p-2 m-2 ${selectedStrength === "Weak" ? "isClicked" : ""
-                      }`}
+                    className={`WeakColor strengthButton rounded-pill p-2 m-2 ${
+                      selectedStrength === "Weak" ? "isClicked" : ""
+                    }`}
                     onClick={() => handleSelectedStrength("Weak")}
                   >
                     Weak
                   </button>
                   <button
-                    className={`MediumColor strengthButton rounded-pill p-2 m-2 ${selectedStrength === "Medium" ? "isClicked" : ""
-                      }`}
+                    className={`MediumColor strengthButton rounded-pill p-2 m-2 ${
+                      selectedStrength === "Medium" ? "isClicked" : ""
+                    }`}
                     onClick={() => handleSelectedStrength("Medium")}
                   >
                     Medium
                   </button>
                   <button
-                    className={`StrongColor strengthButton rounded-pill p-2 m-2 ${selectedStrength === "Strong" ? "isClicked" : ""
-                      }`}
+                    className={`StrongColor strengthButton rounded-pill p-2 m-2 ${
+                      selectedStrength === "Strong" ? "isClicked" : ""
+                    }`}
                     onClick={() => handleSelectedStrength("Strong")}
                   >
                     Strong
