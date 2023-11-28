@@ -6,10 +6,17 @@
     <h1>
         Tazkeer
     </h1>
+  <div>
+      <strong>
+        
+  Test it out <a href="https://tazkeer-app.web.app/sign-up">here</a>!
+      </strong>
+  </div>
+  <br/>
     <div>
         This project was created as part of the <a href="https://www.tech-sisters.com/">Tech Sisters</a> hackathon 2023.
     </div>
-  <br/>
+
   <br/>
     <strong> The Team </strong>
     <p>
