@@ -18,6 +18,10 @@ const HomeScreen = () => {
   let navigate = useNavigate();
   useEffect(() => {
     const fetchData = async (auth_id) => {
+      const token = localStorage.getItem('accessToken');
+      if (token) {
+        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+      }
       try {
         const response = await axios.get(
           `${API_ENDPOINT}/users?auth_id=${auth_id}`
@@ -151,33 +155,29 @@ const HomeScreen = () => {
               <div className="row CategoryBorder my-3 WhiteBackground text p-3">
                 <div className="col-lg-12 d-flex flex-lg-wrap justify-content-around">
                   <button
-                    className={`strengthBadge rounded-pill AllFilter m-2 ${
-                      selectedStrength === "All" ? "isClicked" : ""
-                    }`}
+                    className={`strengthBadge rounded-pill AllFilter m-2 ${selectedStrength === "All" ? "isClicked" : ""
+                      }`}
                     onClick={() => handleFilterSurahStrength("All")}
                   >
                     All
                   </button>
                   <button
-                    className={`WeakColor strengthBadge rounded-pill m-2 ${
-                      selectedStrength === "Weak" ? "isClicked" : ""
-                    }`}
+                    className={`WeakColor strengthBadge rounded-pill m-2 ${selectedStrength === "Weak" ? "isClicked" : ""
+                      }`}
                     onClick={() => handleFilterSurahStrength("Weak")}
                   >
                     Weak
                   </button>
                   <button
-                    className={`MediumColor strengthBadge rounded-pill m-2 ${
-                      selectedStrength === "Medium" ? "isClicked" : ""
-                    }`}
+                    className={`MediumColor strengthBadge rounded-pill m-2 ${selectedStrength === "Medium" ? "isClicked" : ""
+                      }`}
                     onClick={() => handleFilterSurahStrength("Medium")}
                   >
                     Medium
                   </button>
                   <button
-                    className={`StrongColor strengthBadge rounded-pill m-2 ${
-                      selectedStrength === "Strong" ? "isClicked" : ""
-                    }`}
+                    className={`StrongColor strengthBadge rounded-pill m-2 ${selectedStrength === "Strong" ? "isClicked" : ""
+                      }`}
                     onClick={() => handleFilterSurahStrength("Strong")}
                   >
                     Strong

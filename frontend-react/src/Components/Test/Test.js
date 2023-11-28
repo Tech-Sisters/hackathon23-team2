@@ -20,6 +20,10 @@ const Test = () => {
   const [surah, setSurah] = useState({});
   useEffect(() => {
     const fetchData = async () => {
+      const token = localStorage.getItem('accessToken');
+      if (token) {
+        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+      }
       try {
         const response = await axios.get(
           `${API_ENDPOINT}/surahs/ayat?surahId=${surahId}`

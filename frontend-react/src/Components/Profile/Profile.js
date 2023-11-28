@@ -11,6 +11,10 @@ const Profile = () => {
   const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
     const fetchData = async (auth_id) => {
+      const token = localStorage.getItem('accessToken');
+      if (token) {
+        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+      }
       try {
         const res = await axios.get(
           `${API_ENDPOINT}/surahs/surahStrengthCount?auth_id=${auth_id}`

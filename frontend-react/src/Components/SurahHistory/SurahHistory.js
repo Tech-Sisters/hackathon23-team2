@@ -14,10 +14,13 @@ const SurahHistory = () => {
 
   useEffect(() => {
     const fetchData = async () => {
+      const token = localStorage.getItem('accessToken');
+      if (token) {
+        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+      }
       try {
         const response = await axios.get(`${API_ENDPOINT}/surahs/surahHistory?auth_id=${auth_id}&surahId=${surahId}`);
         setSurahHistory(response.data);
-        console.log(response.data)
         setIsLoading(false);
       } catch (error) {
         setError(error);

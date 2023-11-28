@@ -33,7 +33,10 @@ const FinalRankingTest = () => {
     let surahIndexParam = surahIndex === 0 ? "first_surah" : "second_surah";
 
     if (location.state && location.state.updateStrengthOnly === true) {
-      // a new api call
+      const token = localStorage.getItem('accessToken');
+      if (token) {
+        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+      }
       const res = await axios.put(
         `${API_ENDPOINT}/surahs/updateSurahStrengthOnly?auth_id=${auth_id}&surahId=${surah.id}`,
         {
@@ -41,7 +44,10 @@ const FinalRankingTest = () => {
         }
       );
     } else {
-
+      const token = localStorage.getItem('accessToken');
+      if (token) {
+        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+      }
       const res = await axios.put(
         `${API_ENDPOINT}/surahs/updateSurah?auth_id=${auth_id}&surahId=${surahId}&revisedSurah=${surahIndexParam}`,
         {
