@@ -145,9 +145,9 @@ const SignUp = () => {
                     value={formData.username}
                     onChange={handleInputChange}
                   />
-                  {formDataError.nameError && (
+                  {formDataError.usernameError && (
                     <p className="text-danger mb-3">
-                      {formDataError.nameError}
+                      {formDataError.usernameError}
                     </p>
                   )}
                   <label htmlFor="email" className="form-label text">

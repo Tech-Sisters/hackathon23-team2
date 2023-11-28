@@ -11,9 +11,13 @@ const BeginTest = () => {
   const [isLoading, setIsLoading] = useState(true);
   let navigate = useNavigate();
   const location = useLocation();
-  let { surahId, auth_id, surahIndex } = location.state;
+  let { surahId, auth_id, surahIndex, updateStrengthOnly } = location.state || {};
   useEffect(() => {
     const fetchData = async () => {
+      const token = localStorage.getItem('accessToken');
+      if (token) {
+        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+      }
       try {
         const res = await axios.get(`${API_ENDPOINT}/users?auth_id=${auth_id}`);
         setSurah(res.data.juzzAmma.filter((surah) => surah.id === surahId)[0]);
@@ -26,8 +30,14 @@ const BeginTest = () => {
   }, []);
 
   const onBeginTestHandle = () => {
-    navigate("/test", { state: { surahId, auth_id, surahIndex } });
+    // if coming through the surah list and not 'daily practise'
+    if (updateStrengthOnly) {
+      navigate("/test", { state: { surahId, auth_id, updateStrengthOnly } });
+    } else {
+      navigate("/test", { state: { surahId, auth_id, surahIndex } });
+    }
   };
+
   return (
     <>
       <div className="test-page vh-100 d-flex flex-column justify-content-center align-items-center">
@@ -59,10 +69,11 @@ const BeginTest = () => {
                   </span>
                   <h6 className="text p-2">Last Tested On:</h6>
                   <h6 className="fw-normal text ">
+
                     {surah.surahTestHistory.revisions.length !==0
                       ? moment(surah.surahTestHistory.revisions[0].date).format(
-                          "DD/MM/YYYY"
-                        )
+                        "DD/MM/YYYY"
+                      )
                       : "No Date"}
                   </h6>
                 </div>

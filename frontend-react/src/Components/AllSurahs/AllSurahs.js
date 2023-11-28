@@ -32,18 +32,22 @@ const AllSurahs = () => {
       prevItems.map((item) =>
         item.id === index + 78
           ? {
-              ...item,
-              surahTestHistory: {
-                initialStrength: strength,
-                currentStrength: strength,
-              },
-            }
+            ...item,
+            surahTestHistory: {
+              initialStrength: strength,
+              currentStrength: strength,
+            },
+          }
           : item
       )
     );
   };
 
   const handleClickSubmit = async () => {
+    const token = localStorage.getItem('accessToken');
+    if (token) {
+      axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+    }
     const res = await axios.post(
       `${API_ENDPOINT}/surahs/initialiseSurah?auth_id=${auth_id}`,
       {
@@ -111,33 +115,30 @@ const AllSurahs = () => {
                         </td>
                         <td>
                           <BsCircleFill
-                            className={`weakStrengthCircle strengthIcon ${
-                              surah.surahTestHistory.initialStrength === "Weak"
+                            className={`weakStrengthCircle strengthIcon ${surah.surahTestHistory.initialStrength === "Weak"
                                 ? "clicked"
                                 : ""
-                            }`}
+                              }`}
                             onClick={() => handleClickedIcons(index, "Weak")}
                           />
                         </td>
                         <td>
                           <BsCircleFill
-                            className={`mediumStrengthCircle strengthIcon ${
-                              surah.surahTestHistory.initialStrength ===
-                              "Medium"
+                            className={`mediumStrengthCircle strengthIcon ${surah.surahTestHistory.initialStrength ===
+                                "Medium"
                                 ? "clicked"
                                 : ""
-                            }`}
+                              }`}
                             onClick={() => handleClickedIcons(index, "Medium")}
                           />
                         </td>
                         <td>
                           <BsCircleFill
-                            className={`strongStrengthCircle strengthIcon ${
-                              surah.surahTestHistory.initialStrength ===
-                              "Strong"
+                            className={`strongStrengthCircle strengthIcon ${surah.surahTestHistory.initialStrength ===
+                                "Strong"
                                 ? "clicked"
                                 : ""
-                            }`}
+                              }`}
                             onClick={() => handleClickedIcons(index, "Strong")}
                           />
                         </td>
