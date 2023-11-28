@@ -5,11 +5,9 @@ import axios from "axios"
 const SurahController = {
   initialiseSurah: async (req, res, next) => {
     try {
-      const { auth_id } = req.query // Get auth_id from query parameters
+      const { auth_id } = req.query
 
       const { juzzAmma } = req.body
-      console.log("Query Parameters For Initialising Surahs", req.query)
-      console.log("req.body", req.body)
 
       if (!auth_id) {
         return res.status(400).send({ message: "auth_id is required as a query parameter" })
@@ -35,7 +33,6 @@ const SurahController = {
   getSurahHistory: async (req, res, next) => {
     try {
       const { auth_id, surahId } = req.query
-      console.log("auth, surah", auth_id, surahId)
 
       if (!auth_id || !surahId) {
         return res.status(400).send({ message: "auth_id and surahId are required" })
@@ -79,7 +76,7 @@ const SurahController = {
       let strengthCapitalised = capitalizeFirstLetter(strength)
       user.juzzAmma[surahIndex].surahTestHistory.currentStrength = strengthCapitalised
       user.juzzAmma[surahIndex].surahTestHistory.revisions.unshift({
-        date: new Date(), // Current date
+        date: new Date(),
         strength: strengthCapitalised
       })
 
