@@ -28,6 +28,7 @@
  <li><a href="#idea">The Idea</a></li>
     <li><a href="#audience">The Audience</a></li>
     <li><a href="#solution">The Solution</a></li>
+    <li><a href="#tls">Traffic Light System</a></li>
     <li><a href="#prototype">The Prototype</a></li>
     <li><a href="#usage">Usage</a></li>
   
@@ -40,7 +41,10 @@
     The Idea
   </h2>
   <p>
-    A product that will be of benefit to the muslim community, focusing on Qur'an memorisation and a female audience.
+    In it's simplest form, we wanted to build a product that will be of benefit to the muslim community, focusing on Qur'an memorisation and a female audience. 
+    <br/>
+    <br/>
+    To achieve this, the idea developed into a platform that allowed users to keep track of their Surah revision and memorisation strength. 
   <p>
   <br/>
   <br/>
@@ -48,7 +52,7 @@
     Why a female audience?
   </h2>
   <p>
-    We intend to create a community around Qur'an memorisation, and believe that keeping our focus to Muslim women will allow us to create a community that is inline with our beliefs around hayā (modesty). Having this clear boundary will give our users comfort, and allows us to create an application that speaks to our audience, and informs our decisions.
+    We believe that keeping our focus to Muslim women will allow us to create a community that is inline with our beliefs around hayā (modesty). Having this clear boundary will give our users comfort, and allows us to create an application that speaks to our audience, and informs our decisions.
 <br/>
     <br/>
    Furthermore, women, particularly those with household or childcare responsibilities, might find it challenging to attend regular Quran study classes. An app allows them to learn and practice at their own pace and in the comfort of their homes. The community element of the application can keeps such women motivated and allows them to feel the same support and encouragement from attending live classes.
@@ -134,7 +138,7 @@ For example, if working on the frontend:
 <br/>
 If working on the backend, you can use the command `npm run dev` to work with the development environment. 
 <br/>
-<strong>note: </strong>
+
 
 ### When running Git commands:
 
