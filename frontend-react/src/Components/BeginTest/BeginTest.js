@@ -11,12 +11,13 @@ const BeginTest = () => {
   const [isLoading, setIsLoading] = useState(true);
   let navigate = useNavigate();
   const location = useLocation();
-  let { surahId, auth_id, surahIndex, updateStrengthOnly } = location.state || {};
+  let { surahId, auth_id, surahIndex, updateStrengthOnly } =
+    location.state || {};
   useEffect(() => {
     const fetchData = async () => {
-      const token = localStorage.getItem('accessToken');
+      const token = localStorage.getItem("accessToken");
       if (token) {
-        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+        axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
       }
       try {
         const res = await axios.get(`${API_ENDPOINT}/users?auth_id=${auth_id}`);
@@ -63,17 +64,16 @@ const BeginTest = () => {
                 <div className="col-12 d-flex flex-column align-items-center ">
                   <h6 className="text p-2">Current Strength:</h6>
                   <span
-                    className={`badge rounded-pill p-2 ${surah.surahTestHistory.initialStrength}Color`}
+                    className={`badge rounded-pill p-2 ${surah.surahTestHistory.currentStrength}Color`}
                   >
                     {surah.surahTestHistory.currentStrength}
                   </span>
                   <h6 className="text p-2">Last Tested On:</h6>
                   <h6 className="fw-normal text ">
-
-                    {surah.surahTestHistory.revisions.length !==0
+                    {surah.surahTestHistory.revisions.length !== 0
                       ? moment(surah.surahTestHistory.revisions[0].date).format(
-                        "DD/MM/YYYY"
-                      )
+                          "DD/MM/YYYY"
+                        )
                       : "No Date"}
                   </h6>
                 </div>
