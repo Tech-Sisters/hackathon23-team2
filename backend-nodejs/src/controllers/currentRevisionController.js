@@ -77,6 +77,7 @@ const CurrentRevisionController = {
       // incrementing strength rating
       const findNewStrengthRating = () => {
         let newStrengthRating;
+        // increment only until 7 as per our schedule, after that start from the beginning
         if (currentStrengthRating >= 1 && currentStrengthRating < 7) {
           newStrengthRating = currentStrengthRating + 1
         } else {
