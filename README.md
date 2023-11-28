@@ -89,7 +89,7 @@
    A System For Testing Surahs
   </h2>
   <p>
-To test and record the user's strength in each Surah, we adpoted a traffic light system for it's visual cues to the user. 
+To test and record the user's strength in each Surah, we have adopted a traffic light system for it's visual cues to the user. 
 <br/>
 <br/>
 When a user signs up to the app, they are promted to select their memorisation strength for each Surah in the Juzzamma.
@@ -100,11 +100,12 @@ When a user signs up to the app, they are promted to select their memorisation s
 <li><strong>Green</strong>: signals memorisation to a high or perfect level</li>
 </ul>
 <br/>
-After revising a Surah, the user is prompted to select their strength again, so that they are taking accountability of their memorisation and journey.
+After revising a Surah, the user is prompted to select their strength again, so that they are taking accountability of their memorisation journey.
 <br/>
 <img src="/assets/tls-overview.png" alt="traffic light system">
 <br/>
 To build on the testing of Surahs, we have created a revision schedule that follows a pattern and repeats every 7 surahs. 
+<br/>
 <br/>
 This revision cycle prioritises Surahs have not recently been memorised, and gives more weight to weaker Surahs. This system suggests 2 surahs per day to the user, so that they are making sure that their weaker Surahs are being practiced, and that medium and strong Surahs are not slipping down in strength. Furthermore, we have included Strong surahs in the revision cycle to boost user confidence.
 <img src="/assets/daily-cycle.png" alt="daily cycle">
