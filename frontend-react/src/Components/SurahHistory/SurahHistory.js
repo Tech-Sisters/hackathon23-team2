@@ -47,7 +47,7 @@ const SurahHistory = () => {
               <div className="col-12 text-end">
                 <button
                   className="submitButton rounded-pill p-2"
-                  onClick={handleTestSurah}
+                  onClick={handleTestSurah(surahId)}
                 >
                   Test Surah
                 </button>

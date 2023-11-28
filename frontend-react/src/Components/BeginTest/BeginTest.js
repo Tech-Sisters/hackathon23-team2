@@ -28,7 +28,7 @@ const BeginTest = () => {
   const onBeginTestHandle = () => {
     // if coming through the surah list and not 'daily practise'
     if (updateStrengthOnly) {
-      navigate("/next-component", { state: { surahId, auth_id, updateStrengthOnly } });
+      navigate("/test", { state: { surahId, auth_id, updateStrengthOnly } });
     } else {
       navigate("/test", { state: { surahId, auth_id, surahIndex } });
     }

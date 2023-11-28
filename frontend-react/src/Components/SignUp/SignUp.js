@@ -145,7 +145,7 @@ const SignUp = () => {
                     value={formData.username}
                     onChange={handleInputChange}
                   />
-                  {formDataError.nameError && (
+                  {formDataError.usernameError && (
                     <p className="text-danger mb-3">
                       {formDataError.nameError}
                     </p>
