@@ -41,3 +41,4 @@ Thumbs.db
 *.ntvs*
 *.njsproj
 *.sln
+backend-nodejs/serviceAccountKey.json
