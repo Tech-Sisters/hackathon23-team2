@@ -31,8 +31,6 @@ const FinalRankingTest = () => {
     setNextIconVisible(true);
   };
   const handleNextButtonClick = async () => {
-    let surahIndexParam = surahIndex === 0 ? "first_surah" : "second_surah";
-    console.log(surahIndexParam);
     if (location.state && location.state.updateStrengthOnly === true) {
       const token = localStorage.getItem("accessToken");
       if (token) {
@@ -50,7 +48,7 @@ const FinalRankingTest = () => {
         axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
       }
       const res = await axios.put(
-        `${API_ENDPOINT}/surahs/updateSurah?auth_id=${auth_id}&surahId=${surahId}&revisedSurah=${surahIndexParam}`,
+        `${API_ENDPOINT}/surahs/updateSurah?auth_id=${auth_id}&surahId=${surahId}&revisedSurah=${surahIndex}`,
         {
           strength: selectedStrength,
         }
